@@ -1,0 +1,24 @@
+{
+  "samples": [
+    {
+      "id": "x",
+      "key_ids": [
+        "a",
+        "a",
+        "b"
+      ],
+      "replicas": [
+        [
+          0.0
+        ],
+        [
+          0.0
+        ],
+        [
+          0.0
+        ]
+      ]
+    }
+  ],
+  "schema": "llm_attacker.replica_observations.v1"
+}

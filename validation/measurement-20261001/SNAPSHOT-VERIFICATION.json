@@ -1,0 +1,68 @@
+{
+  "schema": "llm-attacker.measurement-validation-snapshot-verification.v1",
+  "source_commit": "6c071a68ae5134522d0a4cd3d7d0fa67acabdfa8",
+  "all_123_historical_source_hashes_match": true,
+  "source_unchanged_after_execution": true,
+  "original_record_files_unchanged": true,
+  "original_record_file_count": 14,
+  "tampered_archive_rejected": true,
+  "git_required_for_reproduction": false,
+  "validation_output": "build/release-v1.0/validation-reproduction",
+  "results": {
+    "failed": 0,
+    "passed": 37,
+    "skipped": 0,
+    "tests": 37
+  },
+  "category_counts": {
+    "MV1": {
+      "failed": 0,
+      "passed": 3,
+      "skipped": 0
+    },
+    "MV2": {
+      "failed": 0,
+      "passed": 4,
+      "skipped": 0
+    },
+    "MV3": {
+      "failed": 0,
+      "passed": 4,
+      "skipped": 0
+    },
+    "MV4": {
+      "failed": 0,
+      "passed": 2,
+      "skipped": 0
+    },
+    "MV5": {
+      "failed": 0,
+      "passed": 3,
+      "skipped": 0
+    },
+    "MV6": {
+      "failed": 0,
+      "passed": 6,
+      "skipped": 0
+    },
+    "MV7": {
+      "failed": 0,
+      "passed": 15,
+      "skipped": 0
+    }
+  },
+  "versions": {
+    "numpy": "2.5.3",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "4.57.6"
+  },
+  "command": [
+    ".venv/bin/python",
+    "paper/paper_b/validation/measurement-20261001/reproduce_from_snapshot.py",
+    "--output",
+    "build/release-v1.0/validation-reproduction"
+  ],
+  "run_json_sha256": "968a5c47466ea766b15d804bbc171653c295ae774d776d812d7e8764a95891bd",
+  "results_json_sha256": "da244b2b5b2dd9238762ac0f1513fbf9cc57ffc21b361ccb9497da53534090ad"
+}

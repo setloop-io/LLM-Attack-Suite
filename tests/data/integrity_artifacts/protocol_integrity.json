@@ -1,0 +1,407 @@
+{
+  "schema": "dtraining.attacker.protocol_integrity.v1",
+  "config": {
+    "attack": "protocol_integrity",
+    "mode": "training",
+    "source": "toy",
+    "arms": [
+      "replay",
+      "reorder",
+      "duplicate",
+      "drop",
+      "cross-session-swap",
+      "epoch-desync",
+      "downgrade",
+      "tensor-tamper",
+      "oversize",
+      "truncate"
+    ],
+    "world": "both",
+    "journal_schema": "llm_attacker.protocol_frames.v1",
+    "seed": 1234,
+    "size_cap": 1048576,
+    "defended_profile": {
+      "auth": true,
+      "session_binding": true,
+      "monotonic_seq": true,
+      "epoch_check": true,
+      "size_cap": 1048576,
+      "validate_dtype_shape": true,
+      "validate_values": true
+    },
+    "vulnerable_profile": {
+      "auth": false,
+      "session_binding": false,
+      "monotonic_seq": false,
+      "epoch_check": false,
+      "size_cap": null,
+      "validate_dtype_shape": false,
+      "validate_values": false
+    },
+    "toy": true,
+    "session_kind": "training",
+    "n_sessions": 4,
+    "frames_per_session": 24,
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "threat_model": {
+    "schema": "llm_attacker.threat_model.v2",
+    "summary": "active inline network attacker / malicious relay / compromised proxy on the split client<->server frame path: observes and mutates protocol frames (replay, reorder, duplicate, drop, cross-session swap, epoch desync, downgrade, tensor tamper, oversize, truncate) without possessing endpoint keys. Tests the integrity and availability of the split protocol itself, not the confidentiality of the tensors crossing it.",
+    "scope": {
+      "use_case": "split-training",
+      "deployment": "multi-tenant",
+      "in_scope": [
+        "split-training activation/gradient frame streams (epochs, key rotation)",
+        "split-inference prefill/decode frame streams",
+        "the bidirectional client<->server protocol: framing, negotiation, session/epoch state"
+      ],
+      "out_of_scope": [
+        "payload confidentiality (seam-inversion family)",
+        "endpoint key theft / insiders holding keys",
+        "crash/hang modeling (the simulator reports accept/reject only)",
+        "drop detection via liveness/gap tracking"
+      ]
+    },
+    "actor": {
+      "role": "network",
+      "vantage": [
+        "inline on the frame path",
+        "malicious relay or compromised proxy"
+      ],
+      "intent": "active",
+      "authorization": "none: no endpoint keys, no tenant credentials",
+      "privileges": [],
+      "knowledge": [
+        "the framing schema llm_attacker.protocol_frames.v1",
+        "per-frame metadata incl. the unkeyed payload hashes"
+      ],
+      "capabilities": [
+        "observe frames in both directions",
+        "modify, inject, reorder, duplicate and drop frames",
+        "capture frames across sessions/epochs for replay"
+      ],
+      "resources": [
+        "a captured frame journal or a synthetic stream"
+      ],
+      "persistence": "session",
+      "collusion": []
+    },
+    "target": {
+      "assets": [
+        "protocol integrity",
+        "session/epoch state consistency",
+        "endpoint availability for benign tenants",
+        "tensor payload integrity"
+      ],
+      "components": [
+        "split client endpoint",
+        "split server endpoint",
+        "relay/proxy segment"
+      ],
+      "data_stores": [],
+      "data_flows": [
+        "client->server activation/prefill frames",
+        "server->client gradient/decode frames"
+      ],
+      "trust_boundaries": [
+        "the network link between split endpoints (S10 protocol/control-plane metadata; S7 traffic shape)"
+      ],
+      "entry_points": [
+        "frames traversing the relay"
+      ],
+      "exit_points": [
+        "endpoint frame intake"
+      ]
+    },
+    "scenario": {
+      "preconditions": [
+        "attacker is inline on the frame path",
+        "endpoint keys are uncompromised",
+        "sessions negotiate validate_mode=strict"
+      ],
+      "lifecycle_stage": [
+        "deployment",
+        "operations"
+      ],
+      "security_properties": [
+        "integrity",
+        "availability",
+        "authenticity"
+      ],
+      "attack_steps": [
+        "replay",
+        "reorder",
+        "duplicate",
+        "drop",
+        "cross-session-swap",
+        "epoch-desync",
+        "downgrade",
+        "tensor-tamper",
+        "oversize",
+        "truncate"
+      ],
+      "technical_impact": [
+        "state divergence via accepted replays/reorderings",
+        "cross-tenant frame injection",
+        "availability loss via drop/oversize/truncation"
+      ],
+      "business_impact": [
+        "corrupted training runs or served outputs",
+        "tenant-isolation and availability findings"
+      ]
+    },
+    "controls": {
+      "assumed": [
+        "endpoints hold per-session per-epoch keys",
+        "no endpoint compromise"
+      ],
+      "tested": [
+        "frame authentication (keyed auth_tag)",
+        "session binding",
+        "monotonic sequence numbers",
+        "epoch rollback checks",
+        "negotiated size caps",
+        "dtype/shape/framing validation",
+        "payload value scanning (NaN/Inf/extreme)",
+        "negotiation downgrade policy floor"
+      ],
+      "bypassed": [],
+      "detective": [
+        "rejection reasons drawn from a small constant set (no secret-dependent detail)"
+      ],
+      "response": [
+        "fail-closed rejection before allocation or model execution"
+      ],
+      "residual_risk": "",
+      "owner": "",
+      "status": "open"
+    },
+    "mappings": {
+      "owasp_llm_2026": [
+        "LLM02",
+        "LLM05",
+        "LLM06"
+      ],
+      "owasp_agentic_2026": [],
+      "mitre_atlas": [],
+      "nist_ai_100_2": [],
+      "cwe": [
+        "CWE-294",
+        "CWE-345"
+      ]
+    },
+    "evaluation": {
+      "success_metrics": [
+        "undetected mutation rate per arm",
+        "cross-session acceptance rate",
+        "mean frames to detection",
+        "benign-session rejection rate (must stay 0)",
+        "false rejection rate on clean traffic (must be 0)"
+      ],
+      "baseline": "the vulnerable world (all defenses off) accepts every mutation; the defended world rejects every mutated frame class except drop (no liveness model)",
+      "budget": {
+        "toy_sessions": 4,
+        "toy_frames_per_session": 24,
+        "seeds": [
+          0,
+          1,
+          2
+        ]
+      },
+      "limitations": [
+        "simulator models accept/reject only \u2014 crash/hang/retry-storm reported as 0.0",
+        "drop undetected by construction (no liveness/gap tracking)",
+        "two bounding worlds; per-defense ablation grids excluded",
+        "payloads never modeled (scanner marks + unkeyed hashes only)"
+      ],
+      "coverage_status": "covered"
+    }
+  },
+  "provenance": {
+    "note": "test fixture: full-tier summary preserved, per-seed results dropped"
+  },
+  "results": [],
+  "summary": [
+    {
+      "experiment": "protocol_integrity",
+      "arm": "cross-session-swap",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.0,
+      "mttd_frames_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "cross-session-swap",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "downgrade",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.0,
+      "mttd_frames_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "downgrade",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "drop",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "drop",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "duplicate",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.0,
+      "mttd_frames_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "duplicate",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "epoch-desync",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.0,
+      "mttd_frames_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "epoch-desync",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "negative-control",
+      "world": "defended",
+      "n_seeds": 3,
+      "benign_rejection_rate_mean": 0.0,
+      "false_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "oversize",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.0,
+      "mttd_frames_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "oversize",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "reorder",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.25,
+      "mttd_frames_mean": 2.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "reorder",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "replay",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.0,
+      "mttd_frames_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "replay",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "tensor-tamper",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.0,
+      "mttd_frames_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "tensor-tamper",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "truncate",
+      "world": "defended",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 0.0,
+      "mttd_frames_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "truncate",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "undetected_mutation_rate_mean": 1.0,
+      "benign_rejection_rate_mean": 0.0
+    }
+  ]
+}

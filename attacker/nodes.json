@@ -1,0 +1,20 @@
+{
+  "schema": "llm_attacker.nodes.v1",
+  "description": "Fleet nodes for remote capture orchestration (attacker/remote.py). host may be a DNS name or IP; user/port are optional (ssh defaults apply).",
+  "nodes": [
+    {"name": "toula", "host": "toula", "role": "gpu",
+     "tags": ["split-training", "capture-source"], "enabled": true},
+    {"name": "koula", "host": "koula", "role": "gpu",
+     "tags": ["split-training", "capture-source"], "enabled": true},
+    {"name": "soula", "host": "soula", "role": "cpu",
+     "tags": ["split-inference", "capture-source"], "enabled": true},
+    {"name": "voula", "host": "voula", "role": "cpu",
+     "tags": ["split-inference", "capture-source"], "enabled": true},
+    {"name": "sasa", "host": "sasa", "role": "cpu",
+     "tags": ["split-inference", "capture-source"], "enabled": true},
+
+    {"name": "localhost", "host": "127.0.0.1", "role": "cpu",
+     "tags": ["example", "same-host-smoke-run"], "enabled": false,
+     "note": "disabled example in place of a commented-out entry (JSON has no comments): enable for a same-host smoke run of remote-fetch"}
+  ]
+}

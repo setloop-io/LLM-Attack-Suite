@@ -1,0 +1,85 @@
+{
+  "schema": "llm_attacker.secure_compute_deployment.v1",
+  "ready_for_execution": false,
+  "deployment_id": "replace-with-frozen-deployment-id",
+  "profile": "tee",
+  "adapter": {
+    "provider": "replace-with-azure-or-gcp",
+    "target_factory": "replace.provider_adapter:create_target",
+    "implementation_revision": "replace-with-commit-or-image-digest",
+    "command_argv": ["python", "-m", "attacker.secure_compute_process_adapter"],
+    "credential_mode": "replace-with-managed-or-workload-identity"
+  },
+  "hardware": {
+    "cpu_tee": "replace",
+    "gpu": "replace",
+    "cc_mode": "replace",
+    "debug_enabled": false,
+    "firmware": "replace",
+    "vbios": "replace",
+    "driver": "replace",
+    "tee_module": "replace",
+    "protected_memory": "replace"
+  },
+  "trust": {
+    "trusted_components": ["client", "verifier", "key-release-service"],
+    "adversary_roles": ["host-os", "hypervisor", "network", "accelerator"],
+    "out_of_scope": ["physical probing unless separately qualified"]
+  },
+  "attestation": {
+    "verifier": "replace",
+    "verifier_policy": "replace",
+    "collateral_as_of_utc": "replace",
+    "allowed_measurements": ["replace"],
+    "key_release_service": "replace"
+  },
+  "workload": {
+    "revision": "replace-with-commit",
+    "config_sha256": "replace-with-64-hex-digest",
+    "corpus_sha256": "replace-with-64-hex-digest",
+    "seed_list": [0, 1, 2]
+  },
+  "protected_phases": {
+    "ingress": true,
+    "tokenisation": true,
+    "forward": true,
+    "return": true,
+    "backward": true,
+    "update": true,
+    "optimizer": true,
+    "checkpointing": true,
+    "logging": true,
+    "crash_restart": true,
+    "egress": true
+  },
+  "leakage_policy": {
+    "message_length": "forbidden",
+    "timing": "measured",
+    "failures": "constant-class-only",
+    "resource_counters": "measured",
+    "outputs": "declared-release-only",
+    "model_release": "forbidden"
+  },
+  "export_policy": {
+    "checkpoints": "encrypted-and-bound",
+    "captures": "external-view-only",
+    "diagnostics": "trusted-access-controlled",
+    "raw_secrets": "never"
+  },
+  "gates": {
+    "valid_release_required": true,
+    "invalid_release_tolerance": 0,
+    "external_canary_tolerance": 0,
+    "mutation_accept_tolerance": 0
+  },
+  "budget": {
+    "currency": "replace",
+    "max_cost": 1,
+    "max_wall_minutes": 60
+  },
+  "stop_rules": [
+    "stop on any invalid secret release",
+    "stop on any external canary exposure",
+    "stop when the frozen cost or wall-time cap is reached"
+  ]
+}

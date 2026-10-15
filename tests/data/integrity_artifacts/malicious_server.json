@@ -1,0 +1,57 @@
+{
+  "schema": "dtraining.attacker.malicious_server.v1",
+  "config": {
+    "attack": "malicious_server_steering",
+    "mode": "training",
+    "toy": true,
+    "hidden": 32,
+    "vocab": 32,
+    "seq_len": 8,
+    "toy_seqs": 8,
+    "tag_temp": 8.0,
+    "toy_mix": 1.0,
+    "server_attack_alpha": 8.0,
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "threat_model": "MALICIOUS split-training server (not honest-but-curious): it crafts the body-side computation (splitbench --server-attack passive-amplify, y = Body(h) + alpha*h through the shared tail) so the seam gradient it returns carries an alpha-scaled per-row near-isometric copy of the label/token direction (dL/dh = alpha * J_lnf (p - onehot) E + honest backprop). The wire observer sees the fwd seam tensor and the returned gradient; it is granted the public token embedding matrix E (tied unembedding). Canonical tokens are evaluation truth, never an attack input (label-free attack). Toy tier: the consistent linear mixing world (E raw Gaussian, A orthogonal public seam map, U = E @ A tied unembedding, M the body's per-row map, mix the cross-position mixing weight); gradients are the world's true CE gradients.",
+  "provenance": {
+    "note": "test fixture: full-tier summary preserved, per-seed results dropped"
+  },
+  "results": [],
+  "summary": [
+    {
+      "experiment": "malicious_server_steering",
+      "world": "honest",
+      "seq_accuracy_mean": 0.02976166666666667,
+      "control_accuracy_mean": 0.02976166666666667,
+      "gate_verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "n_seeds": 3,
+      "n_cells": 3
+    },
+    {
+      "experiment": "malicious_server_steering",
+      "world": "crafted",
+      "seq_accuracy_mean": 0.9583333333333334,
+      "control_accuracy_mean": 0.02976166666666667,
+      "gate_verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "n_seeds": 3,
+      "n_cells": 3
+    },
+    {
+      "experiment": "malicious_server_steering",
+      "crafted_minus_honest_pp": 92.8572
+    }
+  ]
+}

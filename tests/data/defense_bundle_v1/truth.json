@@ -1,0 +1,8 @@
+{
+  "schema": "llm_attacker.replica_truth.v1",
+  "targets": {
+    "x": [
+      0.0
+    ]
+  }
+}

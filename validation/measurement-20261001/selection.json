@@ -1,0 +1,90 @@
+{
+  "schema": "llm-attacker.measurement-validation-selection.v1",
+  "source_commit": "6c071a68ae5134522d0a4cd3d7d0fa67acabdfa8",
+  "source_tag": "submission-candidate-20260922-r2",
+  "selection_frozen_before_execution": true,
+  "scope": "Known-answer, numerical-conformance, metamorphic and fault-injection validation of selected measurement properties; local CPU fixtures only.",
+  "categories": [
+    {
+      "id": "MV1",
+      "property": "Position-aligned recovery metrics",
+      "intervention": "Use known token and span answers, absent spans and a matching substring at the wrong position.",
+      "expected": "Seven of eight aligned tokens recovered in the known-answer example; absent spans remain missing; wrong-position matches receive zero credit.",
+      "tests": [
+        "tests/test_reconstruction_metrics.py::test_aligned_metrics_count_windows_and_spans",
+        "tests/test_reconstruction_metrics.py::test_absent_spans_are_missing_and_all_wrong_has_zero_run",
+        "tests/test_reconstruction_metrics.py::test_matching_substring_at_wrong_position_is_not_recovery"
+      ]
+    },
+    {
+      "id": "MV2",
+      "property": "Score arithmetic and decision boundary",
+      "intervention": "Compare Wilson bounds with independent arithmetic and numerical pins; move one recovered token across the campaign boundary and vary the threshold around equality.",
+      "expected": "Wilson bounds agree within the specified tolerances; 348/8192 passes and 349/8192 fails at the campaign configuration; equality passes.",
+      "tests": [
+        "tests/test_gate.py::test_wilson_upper_matches_hand_computation",
+        "tests/test_gate.py::test_wilson_upper_full_precision_pins",
+        "tests/test_gate.py::test_pass_fail_boundary_at_campaign_config",
+        "tests/test_gate.py::test_pass_fail_boundary_is_inclusive_at_exact_equality"
+      ]
+    },
+    {
+      "id": "MV3",
+      "property": "Positive-control eligibility",
+      "intervention": "Supply a backing control, remove it, substitute a below-threshold control, or link an unreadable control.",
+      "expected": "A backed candidate pass remains PASS; the other three candidate passes become INSUFFICIENT_EVIDENCE under scorecard-policy.v3.",
+      "tests": [
+        "tests/test_scorecard.py::test_v3_pass_with_backing_control_stays_pass",
+        "tests/test_scorecard.py::test_v3_pass_without_control_downgrades",
+        "tests/test_scorecard.py::test_v3_control_below_threshold_does_not_back",
+        "tests/test_scorecard.py::test_v3_unreadable_control_fails_closed"
+      ]
+    },
+    {
+      "id": "MV4",
+      "property": "Prediction/scorer separation",
+      "intervention": "Change a scorer-only truth file between independent BiSR prediction processes; supply forbidden truth and malformed observation inputs.",
+      "expected": "Predictions remain byte-identical after changing scorer-only truth; truth-bearing manifests and invalid observation bundles are rejected.",
+      "tests": [
+        "tests/test_bisr_fidelity.py::test_prediction_boundary_rejects_truth_padding_duplicate_ids",
+        "tests/test_bisr_fidelity.py::test_prediction_process_never_loads_scorer_truth"
+      ]
+    },
+    {
+      "id": "MV5",
+      "property": "Algorithm and gradient fidelity",
+      "intervention": "Compare GRU outputs and derivatives with independent recurrence equations, an AdamW step with independent arithmetic, and white-box head execution across three split depths.",
+      "expected": "Numerical agreement within fixed tolerances; causal GRU outputs; correct nearest-embedding predictions; exact layer prefixes and finite nonzero embedding gradients with frozen victim parameters.",
+      "tests": [
+        "tests/test_bisr_fidelity.py::test_gru_matches_independent_gate_equations_and_is_causal",
+        "tests/test_bisr_fidelity.py::test_forward_gradient_and_independent_adamw_step",
+        "tests/test_whitebox35_head.py::test_head_preserves_embedding_gradient_and_exact_layer_prefix"
+      ]
+    },
+    {
+      "id": "MV6",
+      "property": "Dependence-aware resampling",
+      "intervention": "Use a constant matrix, repeat a fixed-seed calculation, duplicate perfectly correlated documents from two to 500 columns, and supply four invalid matrices.",
+      "expected": "The constant interval is exactly 0.25; fixed-seed results repeat; the correlated example retains [0,1] limits; incomplete, unreplicated, non-finite or non-matrix inputs are rejected.",
+      "tests": [
+        "tests/test_validation_protocol.py::test_crossed_bootstrap_constant_and_deterministic",
+        "tests/test_validation_protocol.py::test_repeated_documents_do_not_create_independent_victim_runs",
+        "tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix"
+      ]
+    },
+    {
+      "id": "MV7",
+      "property": "Semantic and retained-hash evidence validation",
+      "intervention": "Validate an intact synthetic report, inject ten invalid report states and reseal them, verify an intact evidence chain, then alter an event, delete an event or alter its artefact.",
+      "expected": "Both intact cases are accepted; ten invalid report states and all three retained-hash corruption cases are rejected.",
+      "tests": [
+        "tests/test_validation_protocol.py::test_complete_synthetic_report_rescores_successfully",
+        "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed",
+        "tests/test_evidence.py::test_verify_clean_run",
+        "tests/test_evidence.py::test_tamper_event_line_detected",
+        "tests/test_evidence.py::test_tamper_event_deleted_detected",
+        "tests/test_evidence.py::test_tamper_artifact_detected"
+      ]
+    }
+  ]
+}

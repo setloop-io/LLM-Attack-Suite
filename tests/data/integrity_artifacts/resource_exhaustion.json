@@ -1,0 +1,315 @@
+{
+  "schema": "dtraining.attacker.resource_exhaustion.v1",
+  "config": {
+    "attack": "resource_exhaustion",
+    "mode": "training",
+    "toy": true,
+    "arms": [
+      "long-context",
+      "tokenizer-amplification",
+      "cache-thrash",
+      "batch-fragmentation",
+      "decode-amplification",
+      "retry-storm",
+      "memory-pressure",
+      "training-skew",
+      "protocol-oversize"
+    ],
+    "budgets": [
+      8,
+      24,
+      64
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "seed": 1234,
+    "rate": 2.0,
+    "caps": {
+      "duration_ms": 20000,
+      "step_ms": 20,
+      "max_requests": 100000,
+      "billing_cap_units": 20000000.0,
+      "context_window": 4096,
+      "max_output_tokens": 512,
+      "max_batch": 16,
+      "mem_units": 40000.0,
+      "cache_tokens": 24000,
+      "queue_max": 64,
+      "step_budget_units": 12000.0,
+      "fixed_overhead_units": 2000.0,
+      "prefill_unit_cost": 1.0,
+      "decode_unit_cost": 2.0,
+      "header_parse_units": 20.0,
+      "deadline_ms": 12000.0,
+      "request_fee_units": 5.0,
+      "byte_fee_units": 0.01,
+      "out_token_fee_units": 0.05
+    },
+    "live": false
+  },
+  "threat_model": {
+    "schema": "llm_attacker.threat_model.v2",
+    "summary": "active API client / authenticated tenant (or malicious split client) stresses availability, cost, and fairness of the serving stack with valid or near-valid workloads; measured on a simulated stack with hard caps against a concurrent benign control tenant.",
+    "scope": {
+      "use_case": "split-inference",
+      "deployment": "multi-tenant",
+      "in_scope": [
+        "inference serving stack: intake/parser, request queue, prefix cache, batcher, KV memory allocator, billing meter",
+        "split-training coordinator: synchronous microbatch intake (training-skew arm)",
+        "adversarial but schema-valid / near-valid requests within a declared rate budget"
+      ],
+      "out_of_scope": [
+        "volumetric L3/L4 DDoS and botnet floods",
+        "credential theft or unauthenticated access",
+        "live targets without an operator-wired harness (integration point only)"
+      ]
+    },
+    "actor": {
+      "role": "API user",
+      "vantage": [
+        "public inference API",
+        "training microbatch intake (split client)"
+      ],
+      "intent": "active",
+      "authorization": "valid tenant credentials; operates inside the declared request-rate budget unless explicitly testing rate limits",
+      "privileges": [],
+      "knowledge": [
+        "public API schema and limits",
+        "approximate context window / output caps"
+      ],
+      "capabilities": [
+        "craft request shapes: length, token expansion, prefix reuse, decoding settings, retries, header declarations",
+        "sustain a bounded request rate for one session"
+      ],
+      "resources": [
+        "one API key / tenant session",
+        "modest request budget (the --budgets grid)"
+      ],
+      "persistence": "session",
+      "collusion": []
+    },
+    "target": {
+      "assets": [
+        "service availability",
+        "compute and billing budget",
+        "per-tenant fairness",
+        "prefix-cache utility"
+      ],
+      "components": [
+        "request queue",
+        "LRU prefix cache",
+        "continuous batcher",
+        "tokenizer/parser intake",
+        "KV memory allocator",
+        "billing meter"
+      ],
+      "data_stores": [],
+      "data_flows": [],
+      "trust_boundaries": [
+        "tenant <-> shared serving infrastructure"
+      ],
+      "entry_points": [
+        "public completions endpoint",
+        "microbatch intake (split-training client)"
+      ],
+      "exit_points": []
+    },
+    "scenario": {
+      "preconditions": [
+        "multi-tenant or shared serving stack",
+        "attacker holds valid tenant access"
+      ],
+      "lifecycle_stage": [
+        "inference",
+        "operations",
+        "training"
+      ],
+      "security_properties": [
+        "availability"
+      ],
+      "attack_steps": [
+        "shape adversarial-but-valid workloads per arm",
+        "sweep the request-budget grid",
+        "measure amplification, latency, fairness, cache, memory, and recovery against the benign control tenant"
+      ],
+      "technical_impact": [
+        "cost/compute amplification",
+        "control-tenant latency degradation and starvation",
+        "cache thrash and evictions",
+        "allocator pressure",
+        "duplicate work via retries"
+      ],
+      "business_impact": [
+        "unexpected billing",
+        "SLA violations for benign tenants",
+        "manual incident response"
+      ]
+    },
+    "controls": {
+      "assumed": [
+        "authentication and per-tenant rate limits exist (not under test here)"
+      ],
+      "tested": [
+        "hard CPU/memory/duration/request/billing caps",
+        "auto-stop on crossed health or cost thresholds"
+      ],
+      "bypassed": [],
+      "detective": [
+        "billing and health thresholds trip the run (cap_tripped)"
+      ],
+      "response": [
+        "the run auto-stops; an uncontrolled outage is recorded as a failed test, never a success"
+      ],
+      "residual_risk": "simulated stack: absolute numbers are abstract units, not a calibrated deployment",
+      "owner": "",
+      "status": "open"
+    },
+    "mappings": {
+      "owasp_llm_2026": [
+        "LLM06"
+      ],
+      "owasp_agentic_2026": [],
+      "mitre_atlas": [],
+      "nist_ai_100_2": [],
+      "cwe": [
+        "CWE-400"
+      ]
+    },
+    "evaluation": {
+      "success_metrics": [
+        "amplification vs the control tenant",
+        "control-tenant p95 degradation / starvation",
+        "cache hit-rate and eviction impact",
+        "peak memory vs cap",
+        "recovery time / cap_tripped"
+      ],
+      "baseline": "benign-only load at the same total rate (the benign-control cell: amplification parity ~= 1, fairness degradation ~ 0)",
+      "budget": {
+        "requests_per_cell": "budgets grid (default 8/24/64; quick: first 2)",
+        "duration_ms": 20000,
+        "live": "--max-requests / --max-seconds / --max-cost-units"
+      },
+      "limitations": [
+        "abstract compute/memory/billing units \u2014 not calibrated to a specific GPU/model/tokenizer",
+        "single node: no replicas, autoscaling, preemption, chunked prefill, or paged KV",
+        "training-skew models only a synchronous data-parallel barrier",
+        "live driver is an integration point: cap-check + plan + timing helpers are implemented and unit-tested; the send loop must be wired to an operator harness under LiveCapGuard"
+      ],
+      "coverage_status": "partial"
+    }
+  },
+  "provenance": {
+    "note": "test fixture: full-tier summary preserved, per-seed results dropped"
+  },
+  "results": [],
+  "summary": [
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "batch-fragmentation",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_vs_control_mean": 2.178366,
+      "control_p95_degradation_mean": -0.000265,
+      "error_rate_mean": 0.0,
+      "peak_mem_units_max": 11968.0,
+      "recovered_fraction": 1.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "benign-control",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_parity_mean": 1.018812,
+      "error_rate_mean": 0.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "cache-thrash",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_vs_control_mean": 2.123891,
+      "control_p95_degradation_mean": 0.022804,
+      "error_rate_mean": 0.0,
+      "peak_mem_units_max": 33280.0,
+      "recovered_fraction": 1.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "decode-amplification",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_vs_control_mean": 12.712609,
+      "control_p95_degradation_mean": 2.966483,
+      "error_rate_mean": 0.230688,
+      "peak_mem_units_max": 10372.0,
+      "recovered_fraction": 1.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "long-context",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_vs_control_mean": 2.568467,
+      "control_p95_degradation_mean": 2.154938,
+      "error_rate_mean": 0.093161,
+      "peak_mem_units_max": 38359.0,
+      "recovered_fraction": 1.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "memory-pressure",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_vs_control_mean": 2.737658,
+      "control_p95_degradation_mean": 2.617069,
+      "error_rate_mean": 0.224293,
+      "peak_mem_units_max": 39465.0,
+      "recovered_fraction": 1.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "protocol-oversize",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_vs_control_mean": 23.254993,
+      "control_p95_degradation_mean": 0.002598,
+      "error_rate_mean": 0.391455,
+      "peak_mem_units_max": 5336.0,
+      "recovered_fraction": 1.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "retry-storm",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_vs_control_mean": 1.400244,
+      "control_p95_degradation_mean": 0.148682,
+      "error_rate_mean": 0.169868,
+      "peak_mem_units_max": 36864.0,
+      "recovered_fraction": 1.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "tokenizer-amplification",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "amplification_vs_control_mean": 17.421255,
+      "control_p95_degradation_mean": 0.877715,
+      "error_rate_mean": 0.0,
+      "peak_mem_units_max": 34816.0,
+      "recovered_fraction": 1.0
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "training-skew",
+      "n_seeds": 3,
+      "n_cells": 9,
+      "cost_amplification_mean": 620.140618,
+      "step_time_inflation_mean": 2.938015,
+      "control_throughput_drop_mean": 0.625633
+    }
+  ]
+}

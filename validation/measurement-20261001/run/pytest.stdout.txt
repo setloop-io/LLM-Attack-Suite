@@ -1,0 +1,50 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- /Users/geo/LLM-Attacker/.venv/bin/python
+cachedir: /var/folders/6q/zpk5qks52vs97xy70g_d5zzc0000gn/T/paper-b-measurement-20261001-rmd2_78p/.pytest_cache
+rootdir: /private/var/folders/6q/zpk5qks52vs97xy70g_d5zzc0000gn/T/paper-b-measurement-20261001-rmd2_78p
+configfile: pyproject.toml
+collecting ... collected 37 items
+
+tests/test_reconstruction_metrics.py::test_aligned_metrics_count_windows_and_spans PASSED [  2%]
+tests/test_reconstruction_metrics.py::test_absent_spans_are_missing_and_all_wrong_has_zero_run PASSED [  5%]
+tests/test_reconstruction_metrics.py::test_matching_substring_at_wrong_position_is_not_recovery PASSED [  8%]
+tests/test_gate.py::test_wilson_upper_matches_hand_computation PASSED    [ 10%]
+tests/test_gate.py::test_wilson_upper_full_precision_pins PASSED         [ 13%]
+tests/test_gate.py::test_pass_fail_boundary_at_campaign_config PASSED    [ 16%]
+tests/test_gate.py::test_pass_fail_boundary_is_inclusive_at_exact_equality PASSED [ 18%]
+tests/test_scorecard.py::test_v3_pass_with_backing_control_stays_pass PASSED [ 21%]
+tests/test_scorecard.py::test_v3_pass_without_control_downgrades PASSED  [ 24%]
+tests/test_scorecard.py::test_v3_control_below_threshold_does_not_back PASSED [ 27%]
+tests/test_scorecard.py::test_v3_unreadable_control_fails_closed PASSED  [ 29%]
+tests/test_bisr_fidelity.py::test_prediction_boundary_rejects_truth_padding_duplicate_ids PASSED [ 32%]
+tests/test_bisr_fidelity.py::test_prediction_process_never_loads_scorer_truth PASSED [ 35%]
+tests/test_bisr_fidelity.py::test_gru_matches_independent_gate_equations_and_is_causal PASSED [ 37%]
+tests/test_bisr_fidelity.py::test_forward_gradient_and_independent_adamw_step PASSED [ 40%]
+tests/test_whitebox35_head.py::test_head_preserves_embedding_gradient_and_exact_layer_prefix PASSED [ 43%]
+tests/test_validation_protocol.py::test_crossed_bootstrap_constant_and_deterministic PASSED [ 45%]
+tests/test_validation_protocol.py::test_repeated_documents_do_not_create_independent_victim_runs PASSED [ 48%]
+tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix[matrix0] PASSED [ 51%]
+tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix[matrix1] PASSED [ 54%]
+tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix[matrix2] PASSED [ 56%]
+tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix[matrix3] PASSED [ 59%]
+tests/test_validation_protocol.py::test_complete_synthetic_report_rescores_successfully PASSED [ 62%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[missing-missing cells] PASSED [ 64%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[duplicate-duplicate or unexpected] PASSED [ 67%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[score-metric mismatch] PASSED [ 70%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[work-matched prefix work] PASSED [ 72%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[setup-setup matrix] PASSED [ 75%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[victim-victim matrix] PASSED [ 78%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[artifact-artifact matrix] PASSED [ 81%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[failed-incomplete or failed] PASSED [ 83%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[protocol-embedded protocol mismatch] PASSED [ 86%]
+tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[path-prediction path/hash] PASSED [ 89%]
+tests/test_evidence.py::test_verify_clean_run PASSED                     [ 91%]
+tests/test_evidence.py::test_tamper_event_line_detected PASSED           [ 94%]
+tests/test_evidence.py::test_tamper_event_deleted_detected PASSED        [ 97%]
+tests/test_evidence.py::test_tamper_artifact_detected PASSED             [100%]
+
+- generated xml file: /Users/geo/LLM-Attacker/paper/paper_b/validation/measurement-20261001/run/junit.xml -
+
+— test tiers —
+  torch-free: 37 passed, 0 failed, 0 skipped
+============================= 37 passed in 11.59s ==============================

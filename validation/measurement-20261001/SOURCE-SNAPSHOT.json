@@ -1,0 +1,32 @@
+{
+  "schema": "llm-attacker.measurement-validation-source-snapshot.v1",
+  "source_commit": "6c071a68ae5134522d0a4cd3d7d0fa67acabdfa8",
+  "historical_source_tag": "submission-candidate-20260922-r2",
+  "archive": "source-snapshot.tar.gz",
+  "archive_sha256": "c3dd27e4d1ddf9af69519c6f82f9ff102fd8331bf3143261a561372d3b9040dc",
+  "git_archive_sha256": "1d25108661b4daa68211d785b9a7b0b39527762c118d592eece48a2421acf088",
+  "historical_git_archive_sha256": "1d25108661b4daa68211d785b9a7b0b39527762c118d592eece48a2421acf088",
+  "source_files_manifest": "run/source-files.sha256",
+  "source_files_manifest_sha256": "4b8cacee63bf8b9bcfd7f4611fd16ae4b16e3ed2bacecc1ab9c3affb1c190dc9",
+  "source_files": 123,
+  "all_historical_source_hashes_match": true,
+  "selection_sha256": "a2ef4c6b144855e8f0cbb2112dc2f37e57488060a99124f379ecbc652c705d0e",
+  "git_archive_paths": [
+    "attacker",
+    "pyproject.toml",
+    "tests/conftest.py",
+    "tests/conftest_plugin.py",
+    "experiments/bisr_fidelity_predict.py",
+    "experiments/analyze_validation.py",
+    "experiments/validate_reconstruction.py",
+    "experiments/validation_protocol.json",
+    "tests/test_bisr_fidelity.py",
+    "tests/test_evidence.py",
+    "tests/test_gate.py",
+    "tests/test_reconstruction_metrics.py",
+    "tests/test_scorecard.py",
+    "tests/test_validation_protocol.py",
+    "tests/test_whitebox35_head.py"
+  ],
+  "scope": "Exact source bytes used for the frozen 37-case measurement-validation selection; no Git history included."
+}

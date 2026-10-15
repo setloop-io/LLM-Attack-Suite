@@ -1,0 +1,1607 @@
+{
+  "schema": "llm_attacker.integrity_oracle.v1",
+  "source": "tests/data/integrity_calibration.csv (locked D1 = 1.5x)",
+  "n_cells": 113,
+  "tally": {
+    "OPEN": 51,
+    "CLOSED": 47,
+    "UNMEASURED": 15
+  },
+  "cells": [
+    {
+      "experiment": "protocol_integrity",
+      "arm": "cross-session-swap",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "cross-session-swap",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "downgrade",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "downgrade",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "drop",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "drop",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "duplicate",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "duplicate",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "epoch-desync",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "epoch-desync",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "negative-control",
+      "world": "defended",
+      "role": "control",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "false_rejection_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "oversize",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10",
+        "LLM06"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "oversize",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10",
+        "LLM06"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "reorder",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.25,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "reorder",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "replay",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "replay",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "tensor-tamper",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "tensor-tamper",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "truncate",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "protocol_integrity",
+      "arm": "truncate",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "undetected_mutation_rate_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "budget-extraction",
+      "world": "defended",
+      "role": "defense",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "budget-extraction",
+      "world": "isolated",
+      "role": "control",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "budget-extraction",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.5,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "collusion",
+      "world": "defended",
+      "role": "defense",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "collusion",
+      "world": "isolated",
+      "role": "control",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "collusion",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "crafted-extraction",
+      "world": "defended",
+      "role": "defense",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "crafted-extraction",
+      "world": "isolated",
+      "role": "control",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "crafted-extraction",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.5,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "gradient-poisoning",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "gradient-poisoning",
+      "world": "isolated",
+      "role": "control",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "gradient-poisoning",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "instability-bomb",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "instability-bomb",
+      "world": "isolated",
+      "role": "control",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "instability-bomb",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "neuron-observability",
+      "world": "defended",
+      "role": "defense",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "neuron-observability",
+      "world": "isolated",
+      "role": "control",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "neuron-observability",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "collusion",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "collusion",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "epoch-rollback",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "epoch-rollback",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "forward-secrecy",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "forward-secrecy",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "key-in-logs",
+      "world": "control",
+      "role": "control",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "key-in-logs",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "key-in-logs",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "master-seed-exposure",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "master-seed-exposure",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "negotiation-downgrade",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "negotiation-downgrade",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "nonce-reuse",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "nonce-reuse",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "session-binding",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "session-binding",
+      "world": "vulnerable",
+      "role": "baseline",
+      "axes": [
+        "S10"
+      ],
+      "signal_key": "attack_success_rate",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "artifact-substitution",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "artifact-substitution",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "digest-mismatch",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "digest-mismatch",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "unsigned-promotion",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "unsigned-promotion",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "rollback",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "rollback",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "tokenizer-drift",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "tokenizer-drift",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "adapter-confusion",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "adapter-confusion",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "plugin-origin",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "plugin-origin",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "unsafe-serialization",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "unsafe-serialization",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "dependency-drift",
+      "world": "permissive",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_permissive",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "dependency-drift",
+      "world": "enforcing",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "bypass_rate_enforcing",
+      "scale": "rate",
+      "integrity_threshold": 0.05,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "all",
+      "world": "negative-control",
+      "role": "control",
+      "axes": [
+        "S13",
+        "LLM04"
+      ],
+      "signal_key": "negative_control_false_rejections",
+      "scale": "count",
+      "integrity_threshold": 0.0,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "batch-fragmentation",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "amplification_vs_control_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 2.178366,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "benign-control",
+      "world": null,
+      "role": "control",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "amplification_parity_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 1.018812,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "cache-thrash",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "amplification_vs_control_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 2.123891,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "decode-amplification",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "amplification_vs_control_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 12.712609,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "long-context",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "amplification_vs_control_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 2.568467,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "memory-pressure",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "amplification_vs_control_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 2.737658,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "protocol-oversize",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06",
+        "S10"
+      ],
+      "signal_key": "amplification_vs_control_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 23.254993,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "retry-storm",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "amplification_vs_control_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 1.400244,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "tokenizer-amplification",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "amplification_vs_control_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 17.421255,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "resource_exhaustion",
+      "arm": "training-skew",
+      "world": null,
+      "role": "defense",
+      "axes": [
+        "LLM06"
+      ],
+      "signal_key": "cost_amplification_mean",
+      "scale": "ratio",
+      "integrity_threshold": 1.5,
+      "value": 620.140618,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "adapter-backdoor",
+      "world": "undefended",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04",
+        "LLM05"
+      ],
+      "signal_key": "asr_undefended_mean_max_budget",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "adapter-backdoor",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04",
+        "LLM05"
+      ],
+      "signal_key": "asr_defended_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.3364,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "adapter-backdoor",
+      "world": "random-corruption",
+      "role": "control",
+      "axes": [
+        "S13",
+        "LLM04",
+        "LLM05"
+      ],
+      "signal_key": "random_corruption_asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "checkpoint-backdoor",
+      "world": "undefended",
+      "role": "baseline",
+      "axes": [
+        "S13",
+        "LLM04",
+        "LLM05"
+      ],
+      "signal_key": "asr_undefended_mean_max_budget",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "checkpoint-backdoor",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "S13",
+        "LLM04",
+        "LLM05"
+      ],
+      "signal_key": "asr_defended_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.3333,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "checkpoint-backdoor",
+      "world": "random-corruption",
+      "role": "control",
+      "axes": [
+        "S13",
+        "LLM04",
+        "LLM05"
+      ],
+      "signal_key": "random_corruption_asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "clean-label",
+      "world": "undefended",
+      "role": "baseline",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_undefended_mean_max_budget",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "clean-label",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_defended_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.4537,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "clean-label",
+      "world": "random-corruption",
+      "role": "control",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "random_corruption_asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0864,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "dirty-label",
+      "world": "undefended",
+      "role": "baseline",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_undefended_mean_max_budget",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "dirty-label",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_defended_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "dirty-label",
+      "world": "random-corruption",
+      "role": "control",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "random_corruption_asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0617,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "gradient-sign",
+      "world": "undefended",
+      "role": "baseline",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_undefended_mean_max_budget",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.1759,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "gradient-sign",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_defended_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "gradient-sign",
+      "world": "random-corruption",
+      "role": "control",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "random_corruption_asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "model-replacement",
+      "world": "undefended",
+      "role": "baseline",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_undefended_mean_max_budget",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "model-replacement",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_defended_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "model-replacement",
+      "world": "random-corruption",
+      "role": "control",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "random_corruption_asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0031,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "rag-poison",
+      "world": "undefended",
+      "role": "baseline",
+      "axes": [
+        "LLM05",
+        "S13"
+      ],
+      "signal_key": "asr_undefended_mean_max_budget",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.9815,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "rag-poison",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "LLM05",
+        "S13"
+      ],
+      "signal_key": "asr_defended_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.3457,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "rag-poison",
+      "world": "random-corruption",
+      "role": "control",
+      "axes": [
+        "LLM05",
+        "S13"
+      ],
+      "signal_key": "random_corruption_asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "trigger-backdoor",
+      "world": "undefended",
+      "role": "baseline",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_undefended_mean_max_budget",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 1.0,
+      "verdict": "OPEN"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "trigger-backdoor",
+      "world": "defended",
+      "role": "defense",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_defended_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "trigger-backdoor",
+      "world": "random-corruption",
+      "role": "control",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "random_corruption_asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0494,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "poisoning_backdoor",
+      "arm": "zero-poison",
+      "world": "zero-poison",
+      "role": "control",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "asr_mean",
+      "scale": "rate",
+      "integrity_threshold": 0.1,
+      "value": 0.0,
+      "verdict": "CLOSED"
+    },
+    {
+      "experiment": "malicious_server_steering",
+      "arm": "bwd-direction",
+      "world": "honest",
+      "role": "control",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "seq_accuracy_mean",
+      "scale": "rate",
+      "integrity_threshold": null,
+      "value": 0.02976166666666667,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_server_steering",
+      "arm": "bwd-direction",
+      "world": "crafted",
+      "role": "baseline",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "seq_accuracy_mean",
+      "scale": "rate",
+      "integrity_threshold": null,
+      "value": 0.9583333333333334,
+      "verdict": "UNMEASURED"
+    },
+    {
+      "experiment": "malicious_server_steering",
+      "arm": "bwd-direction",
+      "world": null,
+      "role": "informational",
+      "axes": [
+        "LLM05"
+      ],
+      "signal_key": "crafted_minus_honest_pp",
+      "scale": "pp",
+      "integrity_threshold": null,
+      "value": 92.8572,
+      "verdict": "UNMEASURED"
+    }
+  ]
+}

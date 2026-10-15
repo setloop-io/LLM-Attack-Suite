@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+
+# Generated test reports (rebuilt by every run)
+tests/last_run.json
+tests/last_run.md
+tests/TEST_REPORT.json
+tests/TEST_REPORT.md
+
+# OS
+.DS_Store
+
+# Coverage tooling
+.coverage
+coverage.xml
+htmlcov/
+
+# Run outputs and evidence are regenerated, never source
+*.pt
+*.aborted*
+results/
+evidence/
+outputs/
+captures/
+build/
+dist/

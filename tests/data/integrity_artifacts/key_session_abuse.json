@@ -1,0 +1,354 @@
+{
+  "schema": "dtraining.attacker.key_session_abuse.v1",
+  "config": {
+    "attack": "key_session_abuse",
+    "mode": "training",
+    "source": "toy",
+    "arms": [
+      "nonce-reuse",
+      "session-binding",
+      "epoch-rollback",
+      "master-seed-exposure",
+      "forward-secrecy",
+      "key-in-logs",
+      "negotiation-downgrade",
+      "collusion"
+    ],
+    "world": "both",
+    "kdf": "TOY-KDF-sha256 (key-schedule RELATION simulator; NOT real crypto)",
+    "seed": 1234,
+    "toy": true,
+    "defenses": {
+      "vulnerable": {
+        "session_binding": false,
+        "epoch_monotonic": false,
+        "ratchet_forward": false,
+        "nonce_uniqueness": false,
+        "key_log_scrubbing": false,
+        "negotiation_auth": false
+      },
+      "defended": {
+        "session_binding": true,
+        "epoch_monotonic": true,
+        "ratchet_forward": true,
+        "nonce_uniqueness": true,
+        "key_log_scrubbing": true,
+        "negotiation_auth": true
+      }
+    },
+    "epochs": 4,
+    "sessions": 3,
+    "frames": 8,
+    "nonce_space": 4,
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "threat_model": {
+    "schema": "llm_attacker.threat_model.v2",
+    "summary": "complete lifecycle abuse of seam-defense secrets (S10): a malicious insider with protocol-state access abuses derivation, binding, nonces, retention, negotiation, logging, and destruction of the seam key schedule across epochs",
+    "scope": {
+      "use_case": "split-training",
+      "deployment": "multi-tenant",
+      "in_scope": [
+        "seam-defense key schedule (master seed, epoch keys, session keys, nonces, ratchet state)",
+        "session/epoch binding and negotiation state",
+        "logs, crash dumps, and env snapshots that may carry key material"
+      ],
+      "out_of_scope": [
+        "TOY-KDF cryptographic strength (simulated relations only)",
+        "post-compromise security / healing via fresh entropy",
+        "HSM/threshold key custody, multi-device sync"
+      ]
+    },
+    "actor": {
+      "role": "insider",
+      "vantage": [
+        "protocol-state access to the seam-defense control plane",
+        "passive wire observation (collusion arm)"
+      ],
+      "intent": "malicious",
+      "authorization": "none beyond stale/incidentally disclosed protocol state",
+      "privileges": [],
+      "knowledge": [
+        "the TOY-KDF derivation rule",
+        "a stale epoch key or one disclosed store state"
+      ],
+      "capabilities": [
+        "present keys under foreign session ids",
+        "replay stale epoch keys",
+        "request unauthenticated renegotiation",
+        "read logs/crashdumps/env snapshots",
+        "observe wire frames passively"
+      ],
+      "resources": [],
+      "persistence": "cross-epoch",
+      "collusion": [
+        "stale-key holder + passive network observer"
+      ]
+    },
+    "target": {
+      "assets": [
+        "master seed",
+        "epoch keys",
+        "session keys",
+        "nonces/IVs",
+        "ratchet state"
+      ],
+      "components": [
+        "KeyStore",
+        "NoncePool",
+        "RatchetState",
+        "negotiation handler",
+        "frame verifier"
+      ],
+      "data_stores": [
+        "app log",
+        "crash dump",
+        "process env"
+      ],
+      "data_flows": [],
+      "trust_boundaries": [
+        "client<->cloud seam control plane",
+        "tenant session boundary",
+        "epoch boundary"
+      ],
+      "entry_points": [
+        "frame presentation",
+        "renegotiation endpoint",
+        "telemetry/log writers"
+      ],
+      "exit_points": []
+    },
+    "scenario": {
+      "preconditions": [
+        "a seam defense derives per-epoch and per-session keys from a master seed",
+        "the attacker holds stale or disclosed protocol state"
+      ],
+      "lifecycle_stage": [
+        "deployment",
+        "operations"
+      ],
+      "security_properties": [
+        "confidentiality",
+        "authenticity"
+      ],
+      "attack_steps": [
+        "nonce-reuse",
+        "session-binding",
+        "epoch-rollback",
+        "master-seed-exposure",
+        "forward-secrecy",
+        "key-in-logs",
+        "negotiation-downgrade",
+        "collusion"
+      ],
+      "technical_impact": [
+        "cross-session impersonation",
+        "epoch rollback",
+        "full-schedule blast radius from one disclosure",
+        "current-session content recovery via collusion"
+      ],
+      "business_impact": []
+    },
+    "controls": {
+      "assumed": [
+        "a seam defense with epoch rotation exists"
+      ],
+      "tested": [
+        "session_binding",
+        "epoch_monotonic",
+        "ratchet_forward",
+        "nonce_uniqueness",
+        "key_log_scrubbing",
+        "negotiation_auth"
+      ],
+      "bypassed": [],
+      "detective": [
+        "reuse/rollback rejection + detection delay in ops"
+      ],
+      "response": [
+        "key destruction on advance (ratchet_forward)",
+        "log scrubbing"
+      ],
+      "residual_risk": "",
+      "owner": "",
+      "status": "open"
+    },
+    "mappings": {
+      "owasp_llm_2026": [
+        "LLM02",
+        "LLM04",
+        "LLM08"
+      ],
+      "owasp_agentic_2026": [],
+      "mitre_atlas": [],
+      "nist_ai_100_2": [],
+      "cwe": []
+    },
+    "evaluation": {
+      "success_metrics": [
+        "sessions/epochs compromised from one disclosure",
+        "past/future recovery fraction after compromise",
+        "reuse and rollback acceptance rates",
+        "detection/revocation delay in ops",
+        "recovery above the label-free control"
+      ],
+      "baseline": "defended world (all six mitigations on) + isolated benign-log / random-key controls",
+      "budget": {
+        "ops": 8,
+        "worlds": 2
+      },
+      "limitations": [
+        "TOY-KDF is a relation simulator, not crypto",
+        "PCS excluded",
+        "ground-truth plaintexts used for simulator-side scoring only"
+      ],
+      "coverage_status": "covered"
+    }
+  },
+  "provenance": {
+    "note": "test fixture: full-tier summary preserved, per-seed results dropped"
+  },
+  "results": [],
+  "summary": [
+    {
+      "experiment": "key_session_abuse",
+      "arm": "collusion",
+      "world": "defended",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "current_session_recovery_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "collusion",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "attack_success_rate": 1.0,
+      "current_session_recovery_mean": 1.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "epoch-rollback",
+      "world": "defended",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "rollback_acceptance_rate_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "epoch-rollback",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "attack_success_rate": 1.0,
+      "rollback_acceptance_rate_mean": 1.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "forward-secrecy",
+      "world": "defended",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "future_recovery_fraction_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "forward-secrecy",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "attack_success_rate": 1.0,
+      "future_recovery_fraction_mean": 1.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "key-in-logs",
+      "world": "control",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "n_leaks_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "key-in-logs",
+      "world": "defended",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "n_leaks_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "key-in-logs",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "attack_success_rate": 1.0,
+      "n_leaks_mean": 6.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "master-seed-exposure",
+      "world": "defended",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "sessions_compromised_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "master-seed-exposure",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "attack_success_rate": 1.0,
+      "sessions_compromised_mean": 12.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "negotiation-downgrade",
+      "world": "defended",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "downgrade_accepted_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "negotiation-downgrade",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "attack_success_rate": 1.0,
+      "downgrade_accepted_mean": 1.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "nonce-reuse",
+      "world": "defended",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "same_scope_reuse_pairs_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "nonce-reuse",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "attack_success_rate": 1.0,
+      "same_scope_reuse_pairs_mean": 48.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "session-binding",
+      "world": "defended",
+      "n_seeds": 3,
+      "attack_success_rate": 0.0,
+      "foreign_acceptance_rate_mean": 0.0
+    },
+    {
+      "experiment": "key_session_abuse",
+      "arm": "session-binding",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "attack_success_rate": 1.0,
+      "foreign_acceptance_rate_mean": 1.0
+    }
+  ]
+}

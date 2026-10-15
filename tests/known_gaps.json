@@ -1,0 +1,11 @@
+{
+  "schema": "llm_attacker.known_gaps.v1",
+  "note": "Tests that are acknowledged as never-run in the standard environments. Each entry is a deliberate, dated decision \u2014 a gap NOT listed here is a bug in the suite, not a skip.",
+  "gaps": [
+    {
+      "nodeid": "tests/test_defenses.py::test_run_scenarios_end_to_end",
+      "reason": "BDD scenario matrix over privacy_runtime reference defenses; needs the defense SDK",
+      "acknowledged": "2026-08-20"
+    }
+  ]
+}

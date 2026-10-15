@@ -1,0 +1,285 @@
+{
+ "schema": "llm_attacker.test_run.v1",
+ "env": {
+  "python": "3.14.6",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "torch_present": true,
+  "ts_utc": "2026-10-01T18:59:26Z"
+ },
+ "totals": {
+  "tests": 37,
+  "passed": 37,
+  "failed": 0,
+  "skipped": 0
+ },
+ "tiers": {
+  "torch-free": {
+   "passed": 37,
+   "failed": 0,
+   "skipped": 0
+  }
+ },
+ "returncode": 0,
+ "verdict": "GREEN",
+ "tests": [
+  {
+   "nodeid": "tests/test_reconstruction_metrics.py::test_aligned_metrics_count_windows_and_spans",
+   "module": "tests/test_reconstruction_metrics.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_reconstruction_metrics.py::test_absent_spans_are_missing_and_all_wrong_has_zero_run",
+   "module": "tests/test_reconstruction_metrics.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_reconstruction_metrics.py::test_matching_substring_at_wrong_position_is_not_recovery",
+   "module": "tests/test_reconstruction_metrics.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_gate.py::test_wilson_upper_matches_hand_computation",
+   "module": "tests/test_gate.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_gate.py::test_wilson_upper_full_precision_pins",
+   "module": "tests/test_gate.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0
+  },
+  {
+   "nodeid": "tests/test_gate.py::test_pass_fail_boundary_at_campaign_config",
+   "module": "tests/test_gate.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_gate.py::test_pass_fail_boundary_is_inclusive_at_exact_equality",
+   "module": "tests/test_gate.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_scorecard.py::test_v3_pass_with_backing_control_stays_pass",
+   "module": "tests/test_scorecard.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 1.2628
+  },
+  {
+   "nodeid": "tests/test_scorecard.py::test_v3_pass_without_control_downgrades",
+   "module": "tests/test_scorecard.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0005
+  },
+  {
+   "nodeid": "tests/test_scorecard.py::test_v3_control_below_threshold_does_not_back",
+   "module": "tests/test_scorecard.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0008
+  },
+  {
+   "nodeid": "tests/test_scorecard.py::test_v3_unreadable_control_fails_closed",
+   "module": "tests/test_scorecard.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0005
+  },
+  {
+   "nodeid": "tests/test_bisr_fidelity.py::test_prediction_boundary_rejects_truth_padding_duplicate_ids",
+   "module": "tests/test_bisr_fidelity.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0037
+  },
+  {
+   "nodeid": "tests/test_bisr_fidelity.py::test_prediction_process_never_loads_scorer_truth",
+   "module": "tests/test_bisr_fidelity.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 5.8749
+  },
+  {
+   "nodeid": "tests/test_bisr_fidelity.py::test_gru_matches_independent_gate_equations_and_is_causal",
+   "module": "tests/test_bisr_fidelity.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0055
+  },
+  {
+   "nodeid": "tests/test_bisr_fidelity.py::test_forward_gradient_and_independent_adamw_step",
+   "module": "tests/test_bisr_fidelity.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0048
+  },
+  {
+   "nodeid": "tests/test_whitebox35_head.py::test_head_preserves_embedding_gradient_and_exact_layer_prefix",
+   "module": "tests/test_whitebox35_head.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0162
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_crossed_bootstrap_constant_and_deterministic",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.049
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_repeated_documents_do_not_create_independent_victim_runs",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.1387
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix[matrix0]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0002
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix[matrix1]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix[matrix2]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_crossed_bootstrap_rejects_incomplete_or_unreplicated_matrix[matrix3]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0001
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_complete_synthetic_report_rescores_successfully",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.1093
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[missing-missing cells]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.053
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[duplicate-duplicate or unexpected]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.052
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[score-metric mismatch]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0509
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[work-matched prefix work]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0532
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[setup-setup matrix]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0521
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[victim-victim matrix]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0514
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[artifact-artifact matrix]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0507
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[failed-incomplete or failed]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0508
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[protocol-embedded protocol mismatch]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0494
+  },
+  {
+   "nodeid": "tests/test_validation_protocol.py::test_report_fails_closed_even_when_mutated_report_is_sealed[path-prediction path/hash]",
+   "module": "tests/test_validation_protocol.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0516
+  },
+  {
+   "nodeid": "tests/test_evidence.py::test_verify_clean_run",
+   "module": "tests/test_evidence.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0484
+  },
+  {
+   "nodeid": "tests/test_evidence.py::test_tamper_event_line_detected",
+   "module": "tests/test_evidence.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0499
+  },
+  {
+   "nodeid": "tests/test_evidence.py::test_tamper_event_deleted_detected",
+   "module": "tests/test_evidence.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0494
+  },
+  {
+   "nodeid": "tests/test_evidence.py::test_tamper_artifact_detected",
+   "module": "tests/test_evidence.py",
+   "tier": "torch-free",
+   "outcome": "passed",
+   "duration_s": 0.0511
+  }
+ ]
+}

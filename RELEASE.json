@@ -1,0 +1,47 @@
+{
+  "release": "v1.0",
+  "date": "2026-10-15",
+  "paper": {
+    "pdf": "paper/the-llm-attacker.pdf",
+    "pdf_sha256": "4782debb1d7c533f4646ee66377df6ac4f5043aeb6a83eeb3efe9fe9c4461fec",
+    "pages": 41,
+    "arxiv_source": "paper/the-llm-attacker-arxiv-source.zip",
+    "arxiv_source_sha256": "710d2aba8fbf6936e4b5a36da9d481351b902880667aa9c15a61c3dde2f4e7a1",
+    "arxiv_submission_status": "prepared; identifier not assigned",
+    "distribution_license": "arXiv.org perpetual, non-exclusive license"
+  },
+  "module_scope": {
+    "reviewed_in_paper": 64,
+    "maintained_registry": 65,
+    "additional_module_outside_paper_matrix": "secure-compute-audit"
+  },
+  "validation": {
+    "source_files_verified": 123,
+    "fresh_run_totals": {
+      "failed": 0,
+      "passed": 37,
+      "skipped": 0,
+      "tests": 37
+    },
+    "records": "validation/measurement-20261001/",
+    "original_records_unchanged": true
+  },
+  "integrity_scope": {
+    "scientific_payloads": "Existing retained scientific LFS/Git object identities are preserved; no new empirical reruns claimed.",
+    "lfs_root_manifest": "Content digests taken from verified immutable LFS pointers/metadata; this is not an independent download and rehash of the 166.5 GB LFS payloads.",
+    "non_lfs_root_manifest": "SHA256 computed from actual mirrored Git blob bytes.",
+    "new_files": "SHA256 computed from actual prepared/uploaded bytes.",
+    "history": "Public branch/tag history is reset; historical executable snapshots and frozen provenance remain as files."
+  },
+  "access": {
+    "huggingface": "public listing, manual file-access approval",
+    "github": "private source repository; authorised access required"
+  },
+  "remaining_submission_actions": [
+    "Confirm the names of prior AI systems and the sections/tasks they assisted with, and complete the acknowledgement.",
+    "Confirm related-paper status and material overlap, including Paper A."
+  ],
+  "additional_conference_actions": [
+    "Arrange and verify anonymous reviewer access to code and complete evidence."
+  ]
+}

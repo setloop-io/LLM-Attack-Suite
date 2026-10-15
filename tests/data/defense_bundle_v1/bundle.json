@@ -1,0 +1,308 @@
+{
+  "components": [
+    {
+      "id": "rep",
+      "inline": {
+        "calibration": [
+          {
+            "document_id": "cal-0",
+            "label": 0,
+            "membership": 0,
+            "released": [
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          {
+            "document_id": "cal-1",
+            "label": 1,
+            "membership": 1,
+            "released": [
+              [
+                1.0,
+                0.5
+              ]
+            ]
+          },
+          {
+            "document_id": "cal-2",
+            "label": 0,
+            "membership": 0,
+            "released": [
+              [
+                2.0,
+                1.0
+              ]
+            ]
+          },
+          {
+            "document_id": "cal-3",
+            "label": 1,
+            "membership": 1,
+            "released": [
+              [
+                3.0,
+                1.5
+              ]
+            ]
+          }
+        ],
+        "evaluation": [
+          {
+            "document_id": "eval-0",
+            "label": 0,
+            "membership": 0,
+            "released": [
+              [
+                0.1,
+                0.0
+              ]
+            ]
+          },
+          {
+            "document_id": "eval-1",
+            "label": 1,
+            "membership": 1,
+            "released": [
+              [
+                1.1,
+                0.5
+              ]
+            ]
+          },
+          {
+            "document_id": "eval-2",
+            "label": 0,
+            "membership": 0,
+            "released": [
+              [
+                2.1,
+                1.0
+              ]
+            ]
+          },
+          {
+            "document_id": "eval-3",
+            "label": 1,
+            "membership": 1,
+            "released": [
+              [
+                3.1,
+                1.5
+              ]
+            ]
+          }
+        ],
+        "provenance": {
+          "defender": "fixture, no trained defender",
+          "release_stage": "fixture",
+          "source": "golden adapter fixture"
+        },
+        "schema": "representation_privacy.v1"
+      },
+      "kind": "representation_privacy.v1"
+    },
+    {
+      "id": "views",
+      "inline": {
+        "case": "views",
+        "data": {
+          "eval_labels": [
+            0,
+            1
+          ],
+          "evaluation": [
+            [
+              0.2,
+              1.2
+            ],
+            [
+              1.9,
+              0.2
+            ]
+          ],
+          "train": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              0.1,
+              1.1
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              2.1,
+              0.1
+            ]
+          ],
+          "train_labels": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "views": [
+            [
+              0
+            ],
+            [
+              1
+            ]
+          ]
+        },
+        "schema": "view_privacy.v1"
+      },
+      "kind": "view_privacy.v1"
+    },
+    {
+      "id": "captures",
+      "kind": "llm_attacker.replica_observations.v1",
+      "path": "captures.json",
+      "sha256": "6578655ae7601290539dc3529f2cc0242d7bc7316aea81b23a3f73f5e07e6ece"
+    },
+    {
+      "id": "truth",
+      "kind": "llm_attacker.replica_truth.v1",
+      "path": "truth.json",
+      "sha256": "fa07509e6d6eced3d18e22fc5cf41baee5d66ec0efbdde6661e2fc7dfc6424be"
+    },
+    {
+      "id": "phase",
+      "inline": {
+        "phase_provenance": {
+          "private_dataset": "priv",
+          "public_dataset": "pub",
+          "reference_models": [
+            "r1",
+            "r2"
+          ],
+          "references_attacker_owned": true,
+          "statistic": "negative_log_likelihood",
+          "target_model": "fixture"
+        },
+        "phase_records": [
+          {
+            "document_id": "p0",
+            "phase": "private_training_member",
+            "public_exposed": true,
+            "ref_in": [
+              0.9,
+              1.1
+            ],
+            "ref_out": [
+              2.9,
+              3.1
+            ],
+            "statistic": 1.0
+          },
+          {
+            "document_id": "p1",
+            "phase": "public_only",
+            "public_exposed": true,
+            "ref_in": [
+              2.9,
+              3.1
+            ],
+            "ref_out": [
+              2.9,
+              3.1
+            ],
+            "statistic": 3.0
+          },
+          {
+            "document_id": "p2",
+            "phase": "private_training_member",
+            "public_exposed": false,
+            "ref_in": [
+              0.9,
+              1.1
+            ],
+            "ref_out": [
+              2.9,
+              3.1
+            ],
+            "statistic": 1.0
+          },
+          {
+            "document_id": "p3",
+            "phase": "never_seen",
+            "public_exposed": false,
+            "ref_in": [
+              2.9,
+              3.1
+            ],
+            "ref_out": [
+              2.9,
+              3.1
+            ],
+            "statistic": 3.0
+          }
+        ],
+        "schema": "phase_manifest.v1"
+      },
+      "kind": "phase_manifest.v1"
+    },
+    {
+      "id": "kdf",
+      "inline": {
+        "algorithm": "sha256-counter",
+        "domain": "fixture-domain",
+        "epoch": 3,
+        "master_bits": 256,
+        "schema": "kdf_metadata.v1"
+      },
+      "kind": "kdf_metadata.v1"
+    },
+    {
+      "id": "decoys",
+      "inline": {
+        "honest_labels": [
+          0,
+          1
+        ],
+        "pool": [
+          [
+            1.0,
+            2.0
+          ],
+          [
+            3.0,
+            4.0
+          ]
+        ],
+        "recycled_from": "fixture-pool-v0",
+        "schema": "decoy_pool.v1"
+      },
+      "kind": "decoy_pool.v1"
+    },
+    {
+      "id": "layout",
+      "inline": {
+        "coords": [
+          [
+            0
+          ],
+          [
+            1
+          ]
+        ],
+        "n_views": 2,
+        "schema": "view_layout.v1"
+      },
+      "kind": "view_layout.v1"
+    }
+  ],
+  "provenance": {
+    "contact": "fixture@example.invalid",
+    "exported_at": "2026-09-08T00:00:00Z",
+    "framework": "golden-fixture-framework",
+    "version": "1.0.0"
+  },
+  "schema": "llm_attacker.defense_bundle.v1"
+}

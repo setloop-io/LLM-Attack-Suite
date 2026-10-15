@@ -1,0 +1,401 @@
+{
+  "schema": "dtraining.attacker.malicious_client.v1",
+  "config": {
+    "attack": "malicious_client",
+    "mode": "training",
+    "source": "toy",
+    "arms": [
+      "crafted-extraction",
+      "neuron-observability",
+      "gradient-poisoning",
+      "instability-bomb",
+      "budget-extraction",
+      "collusion"
+    ],
+    "world": "both",
+    "dims": [
+      12,
+      8
+    ],
+    "clients": 4,
+    "colluders": 4,
+    "budgets": [
+      4,
+      8,
+      9,
+      16
+    ],
+    "extract_budget": 8,
+    "probes": 96,
+    "collusion_probes": 16,
+    "rounds": 40,
+    "noise_sigma": 0.8,
+    "defenses": {
+      "vulnerable": {
+        "input_validation": false,
+        "update_clipping": false,
+        "budget_limiter": false,
+        "anomaly_detection": false,
+        "response_rounding": false,
+        "response_perturbation": false
+      },
+      "defended": {
+        "input_validation": true,
+        "update_clipping": true,
+        "budget_limiter": true,
+        "anomaly_detection": true,
+        "response_rounding": true,
+        "response_perturbation": true
+      }
+    },
+    "defense_params": {
+      "budget_limit": 8,
+      "norm_cap": 8.0,
+      "clip_tau": 1.0,
+      "reject_cosine": 0.2,
+      "response_quantum": 0.5,
+      "response_noise": 0.5
+    },
+    "seed": 1234,
+    "toy": true,
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "threat_model": {
+    "schema": "llm_attacker.threat_model.v2",
+    "summary": "malicious authenticated client of a shared split learning/inference service (S1/S2/S3): controls only its own inputs and updates but shares the cloud body with honest clients \u2014 crafted-activation body extraction, sensitive-neuron observability, gradient poisoning, numerical-instability bombs, budget-limited extraction, and sybil collusion",
+    "scope": {
+      "use_case": "split-training",
+      "deployment": "multi-tenant",
+      "in_scope": [
+        "shared cloud body slice (seam activations S1 fwd, seam gradients S2 bwd, body weights S3 via functional extraction)",
+        "shared-head training over honest co-client updates",
+        "query/update intake policy stack (validation, budgets, anomaly detection)",
+        "captured client-stream journals (offline policy replay)"
+      ],
+      "out_of_scope": [
+        "nonlinear bodies, attention, LayerNorm (linear 12x8 slice only)",
+        "cross-tenant sybil attribution (colluders share one tenant)",
+        "adaptive attackers that poison the detector's median reference",
+        "cryptographic privacy layers (DP / secure aggregation), multi-epoch persistence"
+      ]
+    },
+    "actor": {
+      "role": "client",
+      "vantage": [
+        "authenticated split-learning client / API user on the shared service"
+      ],
+      "intent": "malicious",
+      "authorization": "valid client credentials; no server-side privileges",
+      "privileges": [],
+      "knowledge": [
+        "own query responses and the shared head state",
+        "the split architecture and body dims (not the weights)",
+        "honest-gradient direction from shared-head drift (worst-case oracle, poisoning arm)"
+      ],
+      "capabilities": [
+        "arbitrary crafted activation uploads (S1)",
+        "bounded malicious gradient updates (S2)",
+        "non-finite / extreme-magnitude inputs",
+        "budget-aware query design"
+      ],
+      "resources": [],
+      "persistence": "cross-session",
+      "collusion": [
+        "c sybil clients registered under one tenant (collusion arm)"
+      ]
+    },
+    "target": {
+      "assets": [
+        "shared body weights W,b (S3)",
+        "honest clients' updates and query distribution (S1/S2)",
+        "shared-head training integrity",
+        "serving availability for honest co-clients"
+      ],
+      "components": [
+        "cloud body slice",
+        "shared head trainer / update aggregator",
+        "query intake and validation",
+        "rate/budget limiter",
+        "shared calibration state"
+      ],
+      "data_stores": [],
+      "data_flows": [],
+      "trust_boundaries": [
+        "client<->cloud seam",
+        "tenant boundary between co-clients"
+      ],
+      "entry_points": [
+        "seam activation upload (fwd)",
+        "gradient/update upload (bwd)",
+        "query endpoint"
+      ],
+      "exit_points": []
+    },
+    "scenario": {
+      "preconditions": [
+        "multiple tenants share one cloud body / head",
+        "the attacker holds valid client credentials",
+        "query responses and shared-head updates are visible to all clients"
+      ],
+      "lifecycle_stage": [
+        "training",
+        "inference"
+      ],
+      "security_properties": [
+        "confidentiality",
+        "integrity",
+        "availability"
+      ],
+      "attack_steps": [
+        "crafted-extraction",
+        "neuron-observability",
+        "gradient-poisoning",
+        "instability-bomb",
+        "budget-extraction",
+        "collusion"
+      ],
+      "technical_impact": [
+        "functional theft of the shared body slice",
+        "honest-client quality loss via poisoned shared training",
+        "cross-client service corruption via poisoned shared state",
+        "limiter evasion via sybil collusion"
+      ],
+      "business_impact": [
+        "model-IP loss",
+        "tenant SLA violations",
+        "integrity loss for all co-tenants"
+      ]
+    },
+    "controls": {
+      "assumed": [
+        "clients authenticate per tenant"
+      ],
+      "tested": [
+        "input_validation",
+        "update_clipping",
+        "budget_limiter",
+        "anomaly_detection",
+        "response_rounding",
+        "response_perturbation"
+      ],
+      "bypassed": [],
+      "detective": [
+        "per-tenant duplicate-probe registry",
+        "median-cosine update anomaly detection with a shifted-benign FP budget"
+      ],
+      "response": [
+        "per-tenant budget revocation"
+      ],
+      "residual_risk": "shared training leaks the honest aggregate gradient direction in both worlds (clipping protects integrity, not privacy)",
+      "owner": "",
+      "status": "open"
+    },
+    "mappings": {
+      "owasp_llm_2026": [
+        "LLM02",
+        "LLM05",
+        "LLM06"
+      ],
+      "owasp_agentic_2026": [],
+      "mitre_atlas": [],
+      "nist_ai_100_2": [],
+      "cwe": []
+    },
+    "evaluation": {
+      "success_metrics": [
+        "extraction fidelity per query budget (rel-Frobenius / cosine / held-out R^2)",
+        "honest-client MSE delta vs the no-attack baseline (shared-model integrity loss)",
+        "cross-client harm excess over the isolated attacker-alone control",
+        "compute/memory amplification vs the benign-parity client",
+        "detection rate; false positives on the shifted-but-benign client (must be 0)",
+        "collusion fidelity gain vs sqrt(C)"
+      ],
+      "baseline": "defended world (all six mitigations on) + isolated attacker-alone control + shifted-benign and benign-parity load controls",
+      "budget": {
+        "queries_per_arm": "<= 96 toy probes",
+        "training_rounds": 40,
+        "colluders": 4,
+        "poison_update_norm": 8.0
+      },
+      "limitations": [
+        "linear body slice \u2014 extraction/observability results are upper bounds",
+        "worst-case oracle for the poisoning direction",
+        "single-tenant sybil assumption",
+        "abstract compute/memory units, not GPU-calibrated"
+      ],
+      "coverage_status": "covered"
+    }
+  },
+  "provenance": {
+    "note": "test fixture: full-tier summary preserved, per-seed results dropped"
+  },
+  "results": [],
+  "summary": [
+    {
+      "experiment": "malicious_client",
+      "arm": "budget-extraction",
+      "world": "defended",
+      "n_seeds": 3,
+      "n_cells": 6,
+      "attack_success_rate": 0.0,
+      "rel_frobenius_mean": 1.15371
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "budget-extraction",
+      "world": "isolated",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "rel_frobenius_mean": 0.0
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "budget-extraction",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "n_cells": 6,
+      "attack_success_rate": 0.5,
+      "rel_frobenius_mean": 0.163023
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "collusion",
+      "world": "defended",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "gain_mean": 1.0
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "collusion",
+      "world": "isolated",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "gain_mean": 2.036739
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "collusion",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 1.0,
+      "gain_mean": 2.036739
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "crafted-extraction",
+      "world": "defended",
+      "n_seeds": 3,
+      "n_cells": 12,
+      "attack_success_rate": 0.0,
+      "rel_frobenius_mean": 1.205363
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "crafted-extraction",
+      "world": "isolated",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "rel_frobenius_mean": 0.0
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "crafted-extraction",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "n_cells": 12,
+      "attack_success_rate": 0.5,
+      "rel_frobenius_mean": 0.268064
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "gradient-poisoning",
+      "world": "defended",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "honest_mse_delta_mean": 0.0
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "gradient-poisoning",
+      "world": "isolated",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "honest_mse_delta_mean": 0.0
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "gradient-poisoning",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 1.0,
+      "honest_mse_delta_mean": 2.843096
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "instability-bomb",
+      "world": "defended",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "honest_outputs_corrupted_mean": 0.0
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "instability-bomb",
+      "world": "isolated",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "honest_outputs_corrupted_mean": 0.0
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "instability-bomb",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 1.0,
+      "honest_outputs_corrupted_mean": 4.0
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "neuron-observability",
+      "world": "defended",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "mean_rel_err_mean": 0.318701
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "neuron-observability",
+      "world": "isolated",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 0.0,
+      "mean_rel_err_mean": 0.059403
+    },
+    {
+      "experiment": "malicious_client",
+      "arm": "neuron-observability",
+      "world": "vulnerable",
+      "n_seeds": 3,
+      "n_cells": 3,
+      "attack_success_rate": 1.0,
+      "mean_rel_err_mean": 0.059403
+    }
+  ]
+}

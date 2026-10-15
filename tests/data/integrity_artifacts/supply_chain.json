@@ -1,0 +1,375 @@
+{
+  "schema": "dtraining.attacker.supply_chain.v1",
+  "config": {
+    "attack": "supply_chain",
+    "mode": "training",
+    "source": "toy",
+    "arms": [
+      "artifact-substitution",
+      "digest-mismatch",
+      "unsigned-promotion",
+      "rollback",
+      "tokenizer-drift",
+      "adapter-confusion",
+      "plugin-origin",
+      "unsafe-serialization",
+      "dependency-drift"
+    ],
+    "seed": 1234,
+    "registry_schema": "llm_attacker.ai_registry.v1",
+    "manifest_schema": "llm_attacker.ai_artifact_manifest.v1",
+    "signature_scheme": "toy-hmac-sha256 (TOY stand-in for PKI \u2014 not a real signature)",
+    "stages": [
+      "manifest-parse",
+      "provenance",
+      "signature",
+      "pinned-digest",
+      "version-monotonic",
+      "binding",
+      "plugin-allowlist",
+      "safe-serialization",
+      "dependency-manifest",
+      "load"
+    ],
+    "toy": true,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "work_dir": "<tempdir>"
+  },
+  "threat_model": {
+    "schema": "llm_attacker.threat_model.v2",
+    "summary": "malicious supply-chain actor (compromised registry, distribution channel, or build pipeline) substitutes, tampers with, rolls back, or confuses AI artifacts and extension points \u2014 models, tokenizers, adapters, datasets, plugins, packages \u2014 to get unverified bytes loaded into training/inference serving",
+    "scope": {
+      "use_case": "split-training",
+      "deployment": "multi-tenant",
+      "in_scope": [
+        "AI-artifact registry verification for split-training and split-inference stacks",
+        "promotion, rollback, binding, plugin, serialization, and dependency gates"
+      ],
+      "out_of_scope": [
+        "registry-server protocols and real PKI/transparency logs",
+        "reproducible-build attestation",
+        "container image layer scanning",
+        "real SBOM (CycloneDX/SPDX) import"
+      ]
+    },
+    "actor": {
+      "role": "insider",
+      "vantage": [
+        "write access to a registry/distribution channel or build pipeline",
+        "promotion path for new artifact versions"
+      ],
+      "intent": "malicious",
+      "authorization": "fixture registries and evaluator-owned --registry dirs only",
+      "privileges": [
+        "artifact bytes/manifest replacement",
+        "for the signed-malicious arms: the toy pipeline key (models a compromised builder)"
+      ],
+      "knowledge": [
+        "registry layout, expected artifact names and versions",
+        "tokenizer/adapter binding conventions"
+      ],
+      "capabilities": [
+        "artifact substitution and in-place tamper",
+        "unsigned promotion",
+        "rollback to archived versions",
+        "tokenizer/adapter identity confusion",
+        "plugin name-squatting",
+        "unsafe-serialization payloads",
+        "dependency drift"
+      ],
+      "resources": [
+        "fixture registries on local disk"
+      ],
+      "persistence": "cross-session",
+      "collusion": []
+    },
+    "target": {
+      "assets": [
+        "base models/checkpoints",
+        "tokenizers/configs",
+        "LoRA adapters + quantization artifacts",
+        "training/eval/RAG datasets",
+        "attack plugins/surface providers",
+        "python packages/container images",
+        "capture tensors/serialized bundles"
+      ],
+      "components": [
+        "artifact registry index + policy",
+        "signed manifests",
+        "AI-BOM",
+        "restricted serialization loader",
+        "dependency manifest"
+      ],
+      "data_stores": [
+        "registry directory",
+        "archive dir",
+        "environment.json"
+      ],
+      "data_flows": [
+        "builder -> registry -> promotion -> serving load"
+      ],
+      "trust_boundaries": [
+        "registry -> serving stack",
+        "tenant -> shared registry",
+        "untrusted bytes -> parser"
+      ],
+      "entry_points": [
+        "--toy fixture registry",
+        "--registry real registry dir"
+      ],
+      "exit_points": [
+        "verification report (accept/reject + stage)"
+      ]
+    },
+    "scenario": {
+      "preconditions": [
+        "registry on disk with signed manifests and a policy",
+        "a verifier that enforces (or, baseline, skips) the policy"
+      ],
+      "lifecycle_stage": [
+        "supply-chain",
+        "deployment"
+      ],
+      "security_properties": [
+        "integrity",
+        "authenticity"
+      ],
+      "attack_steps": [
+        "build pristine registry",
+        "apply one arm's mutation",
+        "verify with enforcing + permissive verifiers",
+        "record bypass rate, detection stage, AI-BOM/provenance metrics"
+      ],
+      "technical_impact": [
+        "unverified or rolled-back artifacts loaded into serving",
+        "untrusted bytes reaching a deserializer",
+        "unapproved plugins/dependencies executing"
+      ],
+      "business_impact": [
+        "supply-chain compromise of training/inference fleets",
+        "cross-tenant model/adapter confusion",
+        "audit failure"
+      ]
+    },
+    "controls": {
+      "assumed": [
+        "pinned digests + (toy) signatures",
+        "provenance required for promotion",
+        "monotonic versions",
+        "tokenizer/adapter bindings",
+        "plugin allowlist",
+        "restricted serialization loader",
+        "approved dependency manifest"
+      ],
+      "tested": [
+        "artifact-substitution",
+        "digest-mismatch",
+        "unsigned-promotion",
+        "rollback",
+        "tokenizer-drift",
+        "adapter-confusion",
+        "plugin-origin",
+        "unsafe-serialization",
+        "dependency-drift"
+      ],
+      "bypassed": [
+        "the permissive verifier (vulnerable baseline) bypasses all of them by design"
+      ],
+      "detective": [
+        "stage-indexed verification report",
+        "per-cell journal"
+      ],
+      "response": [],
+      "residual_risk": "",
+      "owner": "",
+      "status": "open"
+    },
+    "mappings": {
+      "owasp_llm_2026": [
+        "LLM04",
+        "LLM05"
+      ],
+      "owasp_agentic_2026": [],
+      "mitre_atlas": [],
+      "nist_ai_100_2": [],
+      "cwe": [
+        "CWE-494",
+        "CWE-502"
+      ]
+    },
+    "evaluation": {
+      "success_metrics": [
+        "verification bypass rate per arm (enforcing 0.0, permissive ~1.0)",
+        "% loaded assets in the AI-BOM",
+        "provenance completeness of loaded assets",
+        "time-to-detect (stage index)",
+        "failure-stage distribution"
+      ],
+      "baseline": "negative control: the untouched registry verifies cleanly (0 false rejections); permissive verifier bypasses every arm (attack lands)",
+      "budget": {
+        "toy": "5 pinned artifacts + 1 archive + per-arm candidates; a few KB of JSON",
+        "real": "--registry verifies in place, read-only"
+      },
+      "limitations": [
+        "TOY HMAC is not real PKI",
+        "JSON stand-in payloads; real deserializers are the integration point behind the load stage",
+        "inert pickle fixture is never unpickled; permissive loads are simulated",
+        "no reproducible-build attestation or SBOM import"
+      ],
+      "coverage_status": "covered"
+    }
+  },
+  "provenance": {
+    "note": "test fixture: full-tier summary preserved, per-seed results dropped"
+  },
+  "results": [],
+  "summary": [
+    {
+      "experiment": "supply_chain",
+      "arm": "artifact-substitution",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "pinned-digest": 3
+      },
+      "time_to_detect_stage_index_mean": 3.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": 0.0,
+      "provenance_completeness_loaded_permissive": 1.0
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "digest-mismatch",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "pinned-digest": 3
+      },
+      "time_to_detect_stage_index_mean": 3.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": 0.0,
+      "provenance_completeness_loaded_permissive": 1.0
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "unsigned-promotion",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "provenance": 3
+      },
+      "time_to_detect_stage_index_mean": 1.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": 0.0,
+      "provenance_completeness_loaded_permissive": 0.0
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "rollback",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "version-monotonic": 3
+      },
+      "time_to_detect_stage_index_mean": 4.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": 0.0,
+      "provenance_completeness_loaded_permissive": 1.0
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "tokenizer-drift",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "binding": 3
+      },
+      "time_to_detect_stage_index_mean": 5.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": 0.0,
+      "provenance_completeness_loaded_permissive": 1.0
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "adapter-confusion",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "binding": 3
+      },
+      "time_to_detect_stage_index_mean": 5.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": 0.0,
+      "provenance_completeness_loaded_permissive": 1.0
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "plugin-origin",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "plugin-allowlist": 3
+      },
+      "time_to_detect_stage_index_mean": 6.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": 0.0,
+      "provenance_completeness_loaded_permissive": 1.0
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "unsafe-serialization",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "safe-serialization": 3
+      },
+      "time_to_detect_stage_index_mean": 7.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": 0.0,
+      "provenance_completeness_loaded_permissive": 1.0
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "dependency-drift",
+      "n_seeds": 3,
+      "bypass_rate_enforcing": 0.0,
+      "enforce_stage_distribution": {
+        "dependency-manifest": 3
+      },
+      "time_to_detect_stage_index_mean": 8.0,
+      "detected_at_expected_stage": true,
+      "detected_before_load": true,
+      "bypass_rate_permissive": 1.0,
+      "ai_bom_coverage_loaded_permissive": null,
+      "provenance_completeness_loaded_permissive": null
+    },
+    {
+      "experiment": "supply_chain",
+      "arm": "all",
+      "n_seeds": 3,
+      "negative_control_false_rejections": 0,
+      "ai_bom_coverage_loaded_control": 1.0,
+      "provenance_completeness_loaded_control": 1.0
+    }
+  ]
+}

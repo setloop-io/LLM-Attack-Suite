@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-attacker"
+version = "1.0.0"
+readme = "README.md"
+description = "Unified red-team framework for privacy evaluation of split LLM systems (torch-free friendly)"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "LLM-Attacker contributors" }]
+keywords = ["llm", "split-learning", "red-team", "privacy", "security-evaluation"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Security",
+]
+# Zero hard runtime dependencies: the framework imports and runs torch-less;
+# torch is only touched inside run() / guarded self-test sections.
+dependencies = []
+
+[project.optional-dependencies]
+torch = ["torch"]
+research = ["torch>=2.6", "transformers>=4.51,<5", "numpy", "scipy"]
+bisr-metrics = ["rouge==1.0.1", "nltk==3.9.1"]
+gpu = ["pynvml"]
+dev = ["pytest", "numpy"]
+
+[project.scripts]
+llm-attacker = "attacker.__main__:main"
+
+# Third-party attack modules register here (empty in this package):
+#   [project.entry-points."llm_attacker.attacks"]
+#   my-attack = "my_pkg.my_module"
+[project.entry-points."llm_attacker.attacks"]
+
+[tool.setuptools]
+packages = ["attacker", "attacker.attacks"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: end-to-end BDD scenarios (require torch and/or the defense SDK)",
+]
