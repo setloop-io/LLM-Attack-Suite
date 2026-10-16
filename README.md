@@ -2,7 +2,7 @@
 
 Version **v1.0** packages the maintained framework and the manuscript/evidence release for **The LLM-Attacker: A Unified Red-Team Framework for Privacy Evaluation of Split and Distributed LLM Systems**. The Python package version is `1.0.0`.
 
-- [Combined paper PDF](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/blob/v1.0/paper/the-llm-attacker.pdf)
+- [Paper PDF](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/blob/v1.0/paper/the-llm-attacker.pdf)
 - [Self-contained arXiv source ZIP](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/resolve/v1.0/paper/the-llm-attacker-arxiv-source.zip)
 - [Tagged evidence and dataset card](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v1.0)
 - [Measurement-validation source and records](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v1.0/validation/measurement-20261001)
