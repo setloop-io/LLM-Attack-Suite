@@ -1,7 +1,10 @@
-# Contributing to LLM-Attacker
+# Contributing to LLM-Attack Suite
 
-LLM-Attacker is an evidence-led red-team framework for privacy evaluation of
-split and distributed LLM systems. Contributions are welcome.
+LLM-Attack Suite is a modular adversarial attack suite for privacy and security
+evaluation of LLM systems. Contributions are welcome. Existing software
+identifiers and frozen releases retain the earlier LLM-Attacker name; see the
+[naming and prior-work note](README.md) for the distinction from the
+autonomous-driving framework of Mei et al.
 
 ## How to contribute
 

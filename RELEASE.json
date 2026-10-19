@@ -1,14 +1,16 @@
 {
-  "release": "v1.0",
-  "date": "2026-10-15",
+  "release": "v2.0",
+  "date": "2026-10-19",
   "paper": {
-    "pdf": "paper/the-llm-attacker.pdf",
-    "pdf_sha256": "4782debb1d7c533f4646ee66377df6ac4f5043aeb6a83eeb3efe9fe9c4461fec",
-    "pages": 41,
-    "arxiv_source": "paper/the-llm-attacker-arxiv-source.zip",
-    "arxiv_source_sha256": "710d2aba8fbf6936e4b5a36da9d481351b902880667aa9c15a61c3dde2f4e7a1",
-    "arxiv_submission_status": "prepared; identifier not assigned",
-    "distribution_license": "arXiv.org perpetual, non-exclusive license"
+    "pdf": "paper/llm-attack-suite.pdf",
+    "pdf_sha256": "fb3b0a662a0ce1af74c78fc27d39979164d18ae63415fe09a857afff12548300",
+    "pages": 42,
+    "arxiv_source": "paper/llm-attack-suite-arxiv-source.zip",
+    "arxiv_source_sha256": "eca986e7c785e202c3a350a10a7fb1caa2890f49d5b95778921496ea5db39d28",
+    "arxiv_submission_status": "Existing preprint v1; renamed v2 replacement prepared, not submitted.",
+    "distribution_license": "arXiv.org perpetual, non-exclusive license",
+    "title": "LLM-Attack Suite: A Unified Red-Team Framework for Privacy Evaluation of Split and Distributed LLM Systems",
+    "arxiv_identifier": "2610.22722"
   },
   "module_scope": {
     "reviewed_in_paper": 64,
@@ -24,18 +26,19 @@
       "tests": 37
     },
     "records": "validation/measurement-20261001/",
-    "original_records_unchanged": true
+    "original_records_unchanged": true,
+    "run_origin": "Retained v1.0 validation results; no new v2.0 run."
   },
   "integrity_scope": {
-    "scientific_payloads": "Existing retained scientific LFS/Git object identities are preserved; no new empirical reruns claimed.",
+    "scientific_payloads": "All retained scientific Git/LFS object identities are preserved; no empirical reruns or bulk payload reuploads.",
     "lfs_root_manifest": "Content digests taken from verified immutable LFS pointers/metadata; this is not an independent download and rehash of the 166.5 GB LFS payloads.",
     "non_lfs_root_manifest": "SHA256 computed from actual mirrored Git blob bytes.",
     "new_files": "SHA256 computed from actual prepared/uploaded bytes.",
-    "history": "Public branch/tag history is reset; historical executable snapshots and frozen provenance remain as files."
+    "history": "v2.0 is an additive commit and tag; earlier v1.0 history and tag are retained."
   },
   "access": {
     "huggingface": "public listing, manual file-access approval",
-    "github": "private source repository; authorised access required"
+    "github": "Public source repository."
   },
   "remaining_submission_actions": [
     "Confirm the names of prior AI systems and the sections/tasks they assisted with, and complete the acknowledgement.",
@@ -43,5 +46,23 @@
   ],
   "additional_conference_actions": [
     "Arrange and verify anonymous reviewer access to code and complete evidence."
-  ]
+  ],
+  "brand_name": "LLM-Attack Suite",
+  "previous_release": "v1.0",
+  "release_scope": "Branding, paper citation and release-navigation update only; no new experiments or runtime changes.",
+  "software": {
+    "package_name": "llm-attacker",
+    "package_version": "1.0.0",
+    "command": "llm-attacker",
+    "import_package": "attacker",
+    "github_base_revision": "b9f6d18eb0c2980622d785426acc5c2a2f1f897f",
+    "executable_source_unchanged": true,
+    "runtime_contract_unchanged": true
+  },
+  "links": {
+    "github": "https://github.com/setloop-io/LLM-Attack-Suite/tree/v2.0",
+    "huggingface": "https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v2.0",
+    "previous_github_release": "https://github.com/setloop-io/LLM-Attack-Suite/tree/v1.0",
+    "previous_huggingface_release": "https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v1.0"
+  }
 }

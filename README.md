@@ -1,19 +1,23 @@
-# LLM-Attacker v1.0
+# LLM-Attack Suite v2.0
 
-Version **v1.0** packages the maintained framework and the manuscript/evidence release for **The LLM-Attacker: A Unified Red-Team Framework for Privacy Evaluation of Split and Distributed LLM Systems**. The Python package version is `1.0.0`.
+Version **v2.0** packages the branding and paper revision for **LLM-Attack Suite: A Unified Red-Team Framework for Privacy Evaluation of Split and Distributed LLM Systems**. The application was previously released as LLM-Attacker. This release changes branding, paper packaging and release metadata only: executable source and scientific evidence are unchanged, and no new experiments are reported. The Python package version remains `1.0.0`.
 
-- [Combined paper PDF](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/blob/v1.0/paper/the-llm-attacker.pdf)
-- [Self-contained arXiv source ZIP](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/resolve/v1.0/paper/the-llm-attacker-arxiv-source.zip)
-- [Tagged evidence and dataset card](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v1.0)
-- [Measurement-validation source and records](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v1.0/validation/measurement-20261001)
+- [Combined paper PDF](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/blob/v2.0/paper/llm-attack-suite.pdf)
+- [Self-contained arXiv source ZIP](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/resolve/v2.0/paper/llm-attack-suite-arxiv-source.zip)
+- [Tagged evidence and dataset card](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v2.0)
+- [Measurement-validation source and records](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v2.0/validation/measurement-20261001)
+
+The repository is now [setloop-io/LLM-Attack-Suite](https://github.com/setloop-io/LLM-Attack-Suite), with this release at [tag v2.0](https://github.com/setloop-io/LLM-Attack-Suite/tree/v2.0). The earlier **v1.0** release remains available on [GitHub](https://github.com/setloop-io/LLM-Attack-Suite/tree/v1.0) and [Hugging Face](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v1.0) with its original filenames and contents.
+
+**Naming and prior work.** Mei, Nie, Sun and Tian introduced **LLM-Attacker** for LLM-guided adversarial scenario generation in autonomous driving ([IEEE publication](https://doi.org/10.1109/TITS.2025.3578383)). We acknowledge that earlier use of the name and use **LLM-Attack Suite** for this application. The `llm-attacker` package and command, `attacker` imports, plugin and schema identifiers, environment-variable names, stable Hugging Face dataset ID and frozen evidence filenames retain their existing names for compatibility and reproducibility. These legacy identifiers refer to this suite.
 
 The current registry has **65 modules**. The paper's qualification matrix covers the **64-module reviewed snapshot**; the additional `secure-compute-audit` module is outside that matrix. Registered capability, synthetic checks and real-model attack effectiveness are reported separately.
 
-The combined manuscript contains the concise paper followed by the full supplementary material, with one bibliography. It is prepared for arXiv submission; no arXiv identifier or peer-review acceptance is claimed. The selected arXiv distribution licence is arXiv's perpetual, non-exclusive licence.
+The combined manuscript contains the concise paper followed by the full supplementary material, with one bibliography. The earlier-title preprint is available as [arXiv:2610.22722](https://arxiv.org/abs/2610.22722). The revised manuscript is prepared as a replacement for arXiv v2 and has not yet been submitted; the repository's v2.0 release does not update arXiv automatically. The selected arXiv distribution licence is arXiv's perpetual, non-exclusive licence.
 
-Access at this release: the code repository is private, and Hugging Face files require login and manual approval. Repository access controls are independent of the source licence.
+Access at this release: the code repository is public, and Hugging Face files require login and manual approval. Repository access controls are independent of the source licence.
 
-Before arXiv submission, confirm prior AI systems and their tasks and the status/overlap of related papers, then complete the acknowledgement. EuroS&P also needs verified anonymous reviewer access to code and complete evidence. These submission actions remain open; this repository release does not complete them.
+Before submitting the arXiv replacement, confirm prior AI systems and their tasks and the status/overlap of related papers, then complete the acknowledgement. EuroS&P also needs verified anonymous reviewer access to code and complete evidence. These submission actions remain open; this repository release does not complete them.
 
 ## Reproduce the frozen measurement validation
 
@@ -23,7 +27,7 @@ The evidence release includes the exact source archive used by the frozen select
 from huggingface_hub import snapshot_download
 snapshot_download(
     repo_id="Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs",
-    repo_type="dataset", revision="v1.0",
+    repo_type="dataset", revision="v2.0",
     allow_patterns=["validation/measurement-20261001/**"],
     local_dir="evidence",
 )
@@ -34,15 +38,16 @@ python evidence/validation/measurement-20261001/reproduce_from_snapshot.py \
   --output validation-output
 ```
 
-The retained run has 37 passed cases and no failures or skips. A release-preparation rerun of that same frozen selection also passed all 37 cases; this checks measurement machinery and is not an additional attack-effectiveness experiment. Full source snapshots for the reviewed framework and experiment-specific source archives are included with the evidence. Historical source identifiers inside frozen records are provenance labels; use the v1.0 release paths and source archives for reproduction.
+The retained run has 37 passed cases and no failures or skips. A release-preparation rerun of that same frozen selection also passed all 37 cases; this checks measurement machinery and is not an additional attack-effectiveness experiment. These are retained v1.0 validation results, not a new v2.0 run. Full source snapshots for the reviewed framework and experiment-specific source archives are included with the evidence. Historical source identifiers inside frozen records are provenance labels; use the v2.0 release paths and unchanged source archives for reproduction.
 
 
-LLM-Attacker is a unified red-team framework for privacy and security evaluation
-of **split LLM systems**: deployments where a model is partitioned across a
-client (head), one or more cloud bodies, and optional tail segments, and the
+LLM-Attack Suite is a modular collection of scripts and attack modules for
+adversarial privacy and security evaluation of **LLM systems**. It covers
+model, serving, protocol, application and agent attack surfaces. The paper
+focuses on privacy evaluation of split and distributed deployments, where
 parties exchange intermediate activations and gradients ("the wire"). The
-framework collects split-LLM observations, executes attack modules against them,
-and records reproducible, hash-chained measurements.
+framework executes attacks under declared observation contracts and retains
+their configurations, predictions and measurements for independent checking.
 
 It covers three surface families:
 

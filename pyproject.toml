@@ -6,10 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "llm-attacker"
 version = "1.0.0"
 readme = "README.md"
-description = "Unified red-team framework for privacy evaluation of split LLM systems (torch-free friendly)"
+description = "Modular adversarial attack suite for LLM privacy and security evaluation (torch-free friendly)"
 requires-python = ">=3.12"
 license = { text = "MIT" }
-authors = [{ name = "LLM-Attacker contributors" }]
+authors = [{ name = "LLM-Attack Suite contributors" }]
 keywords = ["llm", "split-learning", "red-team", "privacy", "security-evaluation"]
 classifiers = [
     "License :: OSI Approved :: MIT License",
