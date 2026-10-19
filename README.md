@@ -2,14 +2,14 @@
 
 Version **v2.0** packages the branding and paper revision for **LLM-Attack Suite: A Unified Red-Team Framework for Privacy Evaluation of Split and Distributed LLM Systems**. The application was previously released as LLM-Attacker. This release changes branding, paper packaging and release metadata only: executable source and scientific evidence are unchanged, and no new experiments are reported. The Python package version remains `1.0.0`.
 
-- [Combined paper PDF](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/blob/v2.0/paper/llm-attack-suite.pdf)
-- [Self-contained arXiv source ZIP](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/resolve/v2.0/paper/llm-attack-suite-arxiv-source.zip)
-- [Tagged evidence and dataset card](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v2.0)
-- [Measurement-validation source and records](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v2.0/validation/measurement-20261001)
+- [Combined paper PDF](https://huggingface.co/datasets/Setloop/LLM-Attack-Suite/blob/v2.0/paper/llm-attack-suite.pdf)
+- [Self-contained arXiv source ZIP](https://huggingface.co/datasets/Setloop/LLM-Attack-Suite/resolve/v2.0/paper/llm-attack-suite-arxiv-source.zip)
+- [Tagged evidence and dataset card](https://huggingface.co/datasets/Setloop/LLM-Attack-Suite/tree/v2.0)
+- [Measurement-validation source and records](https://huggingface.co/datasets/Setloop/LLM-Attack-Suite/tree/v2.0/validation/measurement-20261001)
 
-The repository is now [setloop-io/LLM-Attack-Suite](https://github.com/setloop-io/LLM-Attack-Suite), with this release at [tag v2.0](https://github.com/setloop-io/LLM-Attack-Suite/tree/v2.0). The earlier **v1.0** release remains available on [GitHub](https://github.com/setloop-io/LLM-Attack-Suite/tree/v1.0) and [Hugging Face](https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v1.0) with its original filenames and contents.
+The repository is now [setloop-io/LLM-Attack-Suite](https://github.com/setloop-io/LLM-Attack-Suite), with this release at [tag v2.0](https://github.com/setloop-io/LLM-Attack-Suite/tree/v2.0). The earlier **v1.0** release remains available on [GitHub](https://github.com/setloop-io/LLM-Attack-Suite/tree/v1.0) and [Hugging Face](https://huggingface.co/datasets/Setloop/LLM-Attack-Suite/tree/v1.0) with its original filenames and contents.
 
-**Naming and prior work.** Mei, Nie, Sun and Tian introduced **LLM-Attacker** for LLM-guided adversarial scenario generation in autonomous driving ([IEEE publication](https://doi.org/10.1109/TITS.2025.3578383)). We acknowledge that earlier use of the name and use **LLM-Attack Suite** for this application. The `llm-attacker` package and command, `attacker` imports, plugin and schema identifiers, environment-variable names, stable Hugging Face dataset ID and frozen evidence filenames retain their existing names for compatibility and reproducibility. These legacy identifiers refer to this suite.
+**Naming and prior work.** Mei, Nie, Sun and Tian introduced **LLM-Attacker** for LLM-guided adversarial scenario generation in autonomous driving ([IEEE publication](https://doi.org/10.1109/TITS.2025.3578383)). We acknowledge that earlier use of the name and use **LLM-Attack Suite** for this application. The `llm-attacker` package and command, `attacker` imports, plugin and schema identifiers, environment-variable names and frozen evidence filenames retain their existing names for compatibility and reproducibility. These legacy identifiers refer to this suite. The Hugging Face repository has moved to `Setloop/LLM-Attack-Suite`; earlier repository links redirect to the new path. This URL correction preserves the existing v1.0 and v2.0 tags, paper bytes and evidence.
 
 The current registry has **65 modules**. The paper's qualification matrix covers the **64-module reviewed snapshot**; the additional `secure-compute-audit` module is outside that matrix. Registered capability, synthetic checks and real-model attack effectiveness are reported separately.
 
@@ -26,7 +26,7 @@ The evidence release includes the exact source archive used by the frozen select
 ```python
 from huggingface_hub import snapshot_download
 snapshot_download(
-    repo_id="Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs",
+    repo_id="Setloop/LLM-Attack-Suite",
     repo_type="dataset", revision="v2.0",
     allow_patterns=["validation/measurement-20261001/**"],
     local_dir="evidence",

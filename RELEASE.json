@@ -61,8 +61,8 @@
   },
   "links": {
     "github": "https://github.com/setloop-io/LLM-Attack-Suite/tree/v2.0",
-    "huggingface": "https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v2.0",
+    "huggingface": "https://huggingface.co/datasets/Setloop/LLM-Attack-Suite/tree/v2.0",
     "previous_github_release": "https://github.com/setloop-io/LLM-Attack-Suite/tree/v1.0",
-    "previous_huggingface_release": "https://huggingface.co/datasets/Setloop/The-LLM-Attacker-Unified-Red-Team-Framework-for-Privacy-Evaluation-of-Split-and-Distributed-LLMs/tree/v1.0"
+    "previous_huggingface_release": "https://huggingface.co/datasets/Setloop/LLM-Attack-Suite/tree/v1.0"
   }
 }
