@@ -83,6 +83,7 @@ ATTACKS = {
     "agent-goal-hijack": "attacker.attacks.agent_goal_hijack",
     "human-agent-trust": "attacker.attacks.human_agent_trust",
     "memory-context-poisoning": "attacker.attacks.memory_context_poisoning",
+    "clm-scr-audit": "attacker.attacks.clm_scr_audit",
     "agentic-supply-chain": "attacker.attacks.agentic_supply_chain",
     "identity-privilege-abuse": "attacker.attacks.identity_privilege_abuse",
     "cascading-failure": "attacker.attacks.cascading_failure",

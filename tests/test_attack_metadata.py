@@ -58,7 +58,7 @@ def test_metadata_vocabularies_match_threat_model_enums():
 
 def test_every_registered_attack_has_metadata_and_vice_versa():
     assert am.validate_registry(list(ATTACKS)) == sorted(ATTACKS)
-    assert len(ATTACKS) == 65
+    assert len(ATTACKS) == 66
     assert set(ATTACKS) == set(am.ATTACK_METADATA)
     assert "S19" not in am.SURFACES
     assert "S19" not in am.metadata_for("secure-compute-audit")["surfaces"]
@@ -129,9 +129,10 @@ def test_lane_b_asi01_coverage_transitions_are_intended():
     assert am.attacks_for_agentic("ASI01") == ["agent-goal-hijack"]
     assert am.attacks_for_owasp("LLM01") == [
         "agent-goal-hijack", "agentic-supply-chain", "cascading-failure",
-        "memory-context-poisoning", "prompt-injection", "rag-vector-abuse"]
+        "clm-scr-audit", "memory-context-poisoning", "prompt-injection",
+        "rag-vector-abuse"]
     s14 = am.attacks_for_surface("S14")
-    assert "agent-goal-hijack" in s14 and len(s14) == 16
+    assert "agent-goal-hijack" in s14 and len(s14) == 17
 
 
 def test_lane_b_asi09_coverage_transitions_are_intended():
@@ -143,7 +144,7 @@ def test_lane_b_asi09_coverage_transitions_are_intended():
     assert am.attacks_for_owasp("LLM07") == [
         "human-agent-trust", "misinformation-integrity"]
     s14 = am.attacks_for_surface("S14")
-    assert "human-agent-trust" in s14 and len(s14) == 16
+    assert "human-agent-trust" in s14 and len(s14) == 17
     md = am.metadata_for("human-agent-trust")
     assert md["owasp_agentic_2026"] == ("ASI09",)
     assert md["owasp_llm_2026"] == ("LLM07",)
@@ -159,9 +160,10 @@ def test_lane_b_asi06_coverage_transitions_are_intended():
     assert am.attacks_for_agentic("ASI06") == ["memory-context-poisoning"]
     assert am.attacks_for_owasp("LLM01") == [
         "agent-goal-hijack", "agentic-supply-chain", "cascading-failure",
-        "memory-context-poisoning", "prompt-injection", "rag-vector-abuse"]
+        "clm-scr-audit", "memory-context-poisoning", "prompt-injection",
+        "rag-vector-abuse"]
     s14 = am.attacks_for_surface("S14")
-    assert "memory-context-poisoning" in s14 and len(s14) == 16
+    assert "memory-context-poisoning" in s14 and len(s14) == 17
     md = am.metadata_for("memory-context-poisoning")
     assert md["owasp_agentic_2026"] == ("ASI06",)
     assert md["owasp_llm_2026"] == ("LLM01",)
@@ -183,7 +185,7 @@ def test_lane_b_asi03_coverage_transitions_are_intended():
         "tool-misuse", "unexpected-code-execution"]
     assert "identity-privilege-abuse" not in am.attacks_for_owasp("LLM01")
     s14 = am.attacks_for_surface("S14")
-    assert "identity-privilege-abuse" in s14 and len(s14) == 16
+    assert "identity-privilege-abuse" in s14 and len(s14) == 17
     md = am.metadata_for("identity-privilege-abuse")
     assert md["owasp_agentic_2026"] == ("ASI03",)
     assert md["owasp_llm_2026"] == ("LLM03",)
@@ -203,9 +205,10 @@ def test_lane_b_asi08_coverage_transitions_are_intended():
     assert am.attacks_for_agentic("ASI08") == ["cascading-failure"]
     assert am.attacks_for_owasp("LLM01") == [
         "agent-goal-hijack", "agentic-supply-chain", "cascading-failure",
-        "memory-context-poisoning", "prompt-injection", "rag-vector-abuse"]
+        "clm-scr-audit", "memory-context-poisoning", "prompt-injection",
+        "rag-vector-abuse"]
     s14 = am.attacks_for_surface("S14")
-    assert "cascading-failure" in s14 and len(s14) == 16
+    assert "cascading-failure" in s14 and len(s14) == 17
     md = am.metadata_for("cascading-failure")
     assert md["owasp_agentic_2026"] == ("ASI08",)
     assert md["owasp_llm_2026"] == ("LLM01",)
@@ -230,7 +233,7 @@ def test_lane_b_asi05_coverage_transitions_are_intended():
         "tool-misuse", "unexpected-code-execution"]
     assert "unexpected-code-execution" not in am.attacks_for_owasp("LLM01")
     s14 = am.attacks_for_surface("S14")
-    assert "unexpected-code-execution" in s14 and len(s14) == 16
+    assert "unexpected-code-execution" in s14 and len(s14) == 17
     md = am.metadata_for("unexpected-code-execution")
     assert md["owasp_agentic_2026"] == ("ASI05",)
     assert md["owasp_llm_2026"] == ("LLM03",)
@@ -254,7 +257,7 @@ def test_lane_b_asi10_coverage_transitions_are_intended():
         "tool-misuse", "unexpected-code-execution"]
     assert "rogue-agent" not in am.attacks_for_owasp("LLM01")
     s14 = am.attacks_for_surface("S14")
-    assert "rogue-agent" in s14 and len(s14) == 16
+    assert "rogue-agent" in s14 and len(s14) == 17
     md = am.metadata_for("rogue-agent")
     assert md["owasp_agentic_2026"] == ("ASI10",)
     assert md["owasp_llm_2026"] == ("LLM03",)
@@ -279,7 +282,7 @@ def test_lane_b_asi07_coverage_transitions_are_intended():
         "tool-misuse", "unexpected-code-execution"]
     assert "insecure-agent-communication" not in am.attacks_for_owasp("LLM01")
     s14 = am.attacks_for_surface("S14")
-    assert "insecure-agent-communication" in s14 and len(s14) == 16
+    assert "insecure-agent-communication" in s14 and len(s14) == 17
     md = am.metadata_for("insecure-agent-communication")
     assert md["owasp_agentic_2026"] == ("ASI07",)
     assert md["owasp_llm_2026"] == ("LLM03",)
@@ -307,7 +310,7 @@ def test_lane_b_cross_agent_deputy_coverage_transitions_are_intended():
         "tool-misuse", "unexpected-code-execution"]
     assert "cross-agent-deputy" not in am.attacks_for_owasp("LLM01")
     s14 = am.attacks_for_surface("S14")
-    assert "cross-agent-deputy" in s14 and len(s14) == 16
+    assert "cross-agent-deputy" in s14 and len(s14) == 17
     assert am.attacks_for_agentic("ASI03") == ["identity-privilege-abuse"]
     assert am.attacks_for_agentic("ASI07") == ["insecure-agent-communication"]
     md = am.metadata_for("cross-agent-deputy")

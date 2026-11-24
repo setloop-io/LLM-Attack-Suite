@@ -365,6 +365,13 @@ ATTACK_METADATA = {
         "owasp_llm_2026": ("LLM01",),
         "owasp_agentic_2026": ("ASI06",),
         "cwe": ("CWE-501",)},
+    "clm-scr-audit": {
+        "actor_intent": "malicious", "persistence": "cross-session",
+        "surfaces": ("S14",),
+        "security_properties": ("integrity", "confidentiality", "authorization", "safety"),
+        "lifecycle_stages": ("inference",),
+        "owasp_llm_2026": ("LLM01", "LLM06"),
+        "cwe": ("CWE-74", "CWE-501")},
     "agentic-supply-chain": {
         "actor_intent": "malicious", "persistence": "cross-session",
         "surfaces": ("S14",),
